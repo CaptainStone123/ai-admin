@@ -5,7 +5,7 @@ import HelloWorld from './components/HelloWorld.vue'
 
 <template>
   <main>
-    hello
+    <RouterView />
   </main>
  </template>
 
