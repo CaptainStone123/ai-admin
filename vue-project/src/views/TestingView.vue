@@ -1,7 +1,105 @@
+<script>
+
+export default {
+  data() {
+    return {
+      input: '',
+      isLoading: false,
+      error: null,
+      message: null,
+      messageUser: null,
+      uiData: {},
+      conv:[]
+    };
+  },
+ 
+  methods: {
+    
+     async fetchData() {
+      this.isLoading = true;
+  
+      const options = {
+        method: "POST",
+        body: JSON.stringify({
+          messages: this.input
+        }), 
+        headers: {
+          "Content-Type": "application/json"
+        }
+      };
+      try {
+        const response = await fetch('http://localhost:5000/completions', options);
+        const data = await response.json();
+        const conMessage = data.choices[0].message;
+
+        console.log("Testing")
+
+        this.messageUser = { role: "user", content: this.input};
+        this.message = { role: conMessage.role, content: conMessage.content};
+        this.input = ' '
+        this.conv.push(this.messageUser, this.message);
+       
+ 
+        // console.log(this.conv) 
+      } catch (error) {
+        this.error = 'An error occurred while fetching data.';
+      } finally {
+        this.isLoading = false;
+      }
+    },
+ 
+    saveData(){
+        console.log(messageUser)
+        console.log(message)
+    }
+  }
+};
+</script>
+
+<template>
+  <div class="container">
+    <div class="chatcontainer w-[80vw]  flex justify-center">
+      <div class="flex flex-col w-[80%] ">
+      <!-- CHAT CONTAINERS -->
+        <div class=" flex justify-center ">
+            <!-- render all messages in the conv array -->
+          <div class="messagecontainer flex flex-col flex-grow justify-start w-[100%] py-[2rem]">
+
+            <div v-for="(message, index) in conv" :key="index" class="message-container">
+              <div :class="[message.role === 'user' ? 'flex user-message user-container justify-end text-right' : 'flex bot-message justify-start text-left']">
+                <span class="role"> <img class="h-[2.5rem]" src="../assets/profile.png" alt=""></span>
+                <span class="message text-[15px] mx-[10px]" v-html="message.content"></span>
+              </div>
+            </div>
+
+            <div v-if="isLoading" class="loading-message text-black flex">
+              <span class="role"> <img class="h-[2.5rem]" src="../assets/profile.png" alt=""></span>
+              <div class="loading-box">
+                <span class="dot"></span>
+                <span class="dot"></span>
+                <span class="dot"></span>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      <div class="w-[100%] h-[4rem]"></div>
+    </div>
+
+        <!-- INPUT CONTAINER  -->
+      <div class="inputcontainer pt-[1rem] pb-[2rem]  flex justify-center w-[80%] bg-[#eef5f9] ">
+        <div class="shadow-2xl  w-[80%] bg-white  ">
+          <input  class="w-[90%]  p-[.7rem] focus:border-transparent focus:outline-none focus:ring-0 placeholder-gray" placeholder="Input question here" type="text" v-model="input" @keyup.enter="fetchData" >
+          <button  class="w-[5%] p-[.7rem]" type="submit" @click="fetchData" ><i class="fa-solid fa-paper-plane text-[gray]"></i> </button>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+</template>
 
 <style >
-
- 
  .inputcontainer{
   position: fixed;
   bottom: 0;
@@ -99,116 +197,5 @@
   width: 80%;
 }
 }
-
- 
 </style>
-
-
-<template>
-  <div class="container">
-    <div class="chatcontainer w-[80vw]  flex justify-center">
-      <div class="flex flex-col w-[80%] ">
-      <!-- CHAT CONTAINERS -->
-        <div class=" flex justify-center ">
-            <!-- render all messages in the conv array -->
-          <div class="messagecontainer flex flex-col flex-grow justify-start w-[100%] py-[2rem]">
-
-            <div v-for="(message, index) in conv" :key="index" class="message-container">
-              <div :class="[message.role === 'user' ? 'flex user-message user-container justify-end text-right' : 'flex bot-message justify-start text-left']">
-                <span class="role"> <img class="h-[2.5rem]" src="../assets/profile..png" alt=""></span>
-                <span class="message text-[15px] mx-[10px]" v-html="message.content"></span>
-              </div>
-            </div>
-
-            <div v-if="isLoading" class="loading-message text-black flex">
-              <span class="role"> <img class="h-[2.5rem]" src="../assets/profile.png" alt=""></span>
-              <div class="loading-box">
-                <span class="dot"></span>
-                <span class="dot"></span>
-                <span class="dot"></span>
-              </div>
-            </div>
-
-          </div>
-        </div>
-      <div class="w-[100%] h-[4rem]"></div>
-    </div>
-
-        <!-- INPUT CONTAINER  -->
-      <div class="inputcontainer pt-[1rem] pb-[2rem]  flex justify-center w-[80%] bg-[#eef5f9] ">
-        <div class="shadow-2xl  w-[80%] bg-white  ">
-          <input  class="w-[90%]  p-[.7rem] focus:border-transparent focus:outline-none focus:ring-0 placeholder-gray" placeholder="Input question here" type="text" v-model="input" @keyup.enter="fetchData" >
-          <button  class="w-[5%] p-[.7rem]" type="submit" @click="fetchData" ><i class="fa-solid fa-paper-plane text-[gray]"></i> </button>
-        </div>
-      </div>
-
-    </div>
-
-  </div>
-
-    
-</template>
-
- 
-<script>
- 
-
-
-export default {
-  data() {
-    return {
-      input: '',
-      isLoading: false,
-      error: null,
-      message: null,
-      messageUser: null,
-      uiData: {},
-      conv:[]
-    };
-  },
- 
-  methods: {
-    
-     async fetchData() {
-      this.isLoading = true;
-  
-      const options = {
-        method: "POST",
-        body: JSON.stringify({
-          messages: this.input
-        }), 
-        headers: {
-          "Content-Type": "application/json"
-        }
-      };
-      try {
-        const response = await fetch('http://localhost:5000/completions', options);
-        const data = await response.json();
-        const conMessage = data.choices[0].message;
-
-        console.log("Testing")
-
-        this.messageUser = { role: "user", content: this.input};
-        this.message = { role: conMessage.role, content: conMessage.content};
-        this.input = ' '
-        this.conv.push(this.messageUser, this.message);
-       
- 
-        // console.log(this.conv) 
-      } catch (error) {
-        this.error = 'An error occurred while fetching data.';
-      } finally {
-        this.isLoading = false;
-      }
-    },
- 
-    saveData(){
-        console.log(messageUser)
-        console.log(message)
-    }
-  }
-};
-</script>
-
-
 
