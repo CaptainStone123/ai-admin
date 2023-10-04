@@ -104,7 +104,7 @@ import axios from 'axios';
             <td >1.</td>
             <td >365</td>
             <td >{{ classify }}</td>
-            <td class="details-btn-td"><button class="details-tbn"><a href="/knowledge-source/data-item1">Edit</a></button></td>
+            <td class="details-btn-td"><button class="details-tbn"><RouterLink to="/knowledge-source/data-item-1">Edit</RouterLink></button></td>
           </tr>
         </tbody>
         </table>
@@ -131,21 +131,21 @@ import axios from 'axios';
               <td>3641</td>
               <td>one_111</td>
               <td>{{ faq }}</td>
-              <td class="details-btn-td"><button class="details-tbn"><a href="/knowledge-source/data-item-2">Edit</a></button></td>
+              <td class="details-btn-td"><button class="details-tbn"><RouterLink to="/knowledge-source/data-item-2">Edit</RouterLink></button></td>
             </tr>
             <tr>
               <td>2.</td>
               <td>12696</td>
               <td>two_222</td>
               <td>{{ about }}</td>
-              <td class="details-btn-td"><button class="details-tbn"><a href="/knowledge-source/data-item-3">Edit</a></button></td>
+              <td class="details-btn-td"><button class="details-tbn"><RouterLink to="/knowledge-source/data-item-3">Edit</RouterLink></button></td>
             </tr>
             <tr>
               <td>3.</td>
               <td>8779</td>
               <td>three_333</td>
               <td>{{ admissions }}</td>
-              <td class="details-btn-td"><button class="details-tbn"><a href="/knowledge-source/data-item-4">Edit</a></button></td>
+              <td class="details-btn-td"><button class="details-tbn"><RouterLink to="/knowledge-source/data-item-4">Edit</RouterLink></button></td>
             </tr>
             <tr>
               <td>4.</td>
