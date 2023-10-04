@@ -1,18 +1,21 @@
 <script setup>
 import { RouterLink, RouterView } from 'vue-router'
 import HelloWorld from './components/HelloWorld.vue'
+import Sidebar from './components/Sidebar.vue'
 </script>
 
 <template>
   <section>
     <header>
       <nav>
+        <Sidebar/> 
         <RouterLink to="/">Home</RouterLink>
         <RouterLink to="/about">About</RouterLink>
       </nav>
     </header>
     <body>
       <RouterView />
+   
     </body>
   </section>
 </template>
