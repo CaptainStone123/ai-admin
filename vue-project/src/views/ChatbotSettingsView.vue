@@ -1,3 +1,83 @@
+
+<script>
+import axios from 'axios';
+
+export default {
+  data() {
+    return {
+      newName: '', 
+      newPersonality: '', 
+      newIntro: '', 
+      selectedImage: null,
+      newModel: '',
+      newIntlimit: '',
+      sliderValue: 50,
+    };
+  },
+
+  computed: {
+    temperatureLevel() {
+      if (this.sliderValue >= 0 && this.sliderValue <= 33) {
+        return 'Low';
+      } else if (this.sliderValue >= 34 && this.sliderValue <= 66) {
+        return 'Average';
+      } else {
+        return 'High';
+      }
+    },
+  },
+
+  methods: {
+    async updateProfile() {
+  try {
+    const updateData = {};
+
+    if (this.newName.trim() !== '') {
+      updateData.Name = this.newName;
+    }
+
+    if (this.newPersonality.trim() !== '') {
+      updateData.Personality = this.newPersonality;
+    }
+
+    if (this.newIntro.trim() !== '') {
+      updateData.Introduction = this.newIntro;
+    }
+
+    if (this.newModel.trim() !== '') {
+      updateData.Model = this.newModel;
+    }
+
+    if (this.newIntlimit !== '' && !isNaN(this.newIntlimit)) {
+      updateData.Intlimit = parseInt(this.newIntlimit, 10);
+    }
+
+    updateData.Temperature = this.temperatureLevel;
+
+    if (this.selectedImage) {
+      updateData.PImage = this.selectedImage;
+    }
+
+    if (Object.keys(updateData).length > 0) {
+      const response = await axios.put('http://localhost:3000/api/updateProfile', updateData);
+
+      console.log('Profile updated successfully:', response.data);
+    } else {
+      console.log('No fields to update.');
+    }
+  } catch (error) {
+    console.error('Error updating profile:', error);
+    }
+  },
+
+  handleImageUpload(event) {
+    this.selectedImage = event.target.files[0];
+  },
+
+  },
+};
+</script>
+
 <template>
   <div class="container">
     <div class="items">
@@ -132,82 +212,3 @@ input{
 
 </style>
 
-
-<script>
-import axios from 'axios';
-
-export default {
-  data() {
-    return {
-      newName: '', 
-      newPersonality: '', 
-      newIntro: '', 
-      selectedImage: null,
-      newModel: '',
-      newIntlimit: '',
-      sliderValue: 50,
-    };
-  },
-
-  computed: {
-    temperatureLevel() {
-      if (this.sliderValue >= 0 && this.sliderValue <= 33) {
-        return 'Low';
-      } else if (this.sliderValue >= 34 && this.sliderValue <= 66) {
-        return 'Average';
-      } else {
-        return 'High';
-      }
-    },
-  },
-
-  methods: {
-    async updateProfile() {
-  try {
-    const updateData = {};
-
-    if (this.newName.trim() !== '') {
-      updateData.Name = this.newName;
-    }
-
-    if (this.newPersonality.trim() !== '') {
-      updateData.Personality = this.newPersonality;
-    }
-
-    if (this.newIntro.trim() !== '') {
-      updateData.Introduction = this.newIntro;
-    }
-
-    if (this.newModel.trim() !== '') {
-      updateData.Model = this.newModel;
-    }
-
-    if (this.newIntlimit !== '' && !isNaN(this.newIntlimit)) {
-      updateData.Intlimit = parseInt(this.newIntlimit, 10);
-    }
-
-    updateData.Temperature = this.temperatureLevel;
-
-    if (this.selectedImage) {
-      updateData.PImage = this.selectedImage;
-    }
-
-    if (Object.keys(updateData).length > 0) {
-      const response = await axios.put('http://localhost:3000/api/updateProfile', updateData);
-
-      console.log('Profile updated successfully:', response.data);
-    } else {
-      console.log('No fields to update.');
-    }
-  } catch (error) {
-    console.error('Error updating profile:', error);
-    }
-  },
-
-  handleImageUpload(event) {
-    this.selectedImage = event.target.files[0];
-  },
-
-  },
-};
-</script>
