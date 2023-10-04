@@ -104,7 +104,7 @@ import axios from 'axios';
             <td >1.</td>
             <td >365</td>
             <td >{{ classify }}</td>
-            <td class="details-btn-td"><button class="details-tbn"><a href="/knowledge-source/data-item">Edit</a></button></td>
+            <td class="details-btn-td"><button class="details-tbn"><a href="/knowledge-source/data-item1">Edit</a></button></td>
           </tr>
         </tbody>
         </table>
