@@ -152,7 +152,7 @@ import axios from 'axios';
               <td>3437</td>
               <td>four_444</td>
               <td>{{ academics }}</td>
-              <td class="details-btn-td"><button class="details-tbn"><a href="/knowledge-source/data-item-5">Edit</a></button></td>
+              <td class="details-btn-td"><button class="details-tbn"><RouterLink to="/knowledge-source/data-item-5">Edit</RouterLink></button></td>
             </tr>
           </tbody>
         </table>
