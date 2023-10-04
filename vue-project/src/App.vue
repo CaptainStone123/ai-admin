@@ -2,6 +2,7 @@
 import { RouterLink, RouterView } from 'vue-router'
 import HelloWorld from './components/HelloWorld.vue'
 import Sidebar from './components/Sidebar.vue'
+import Navbar from './components/Navbar.vue'
 </script>
 
 <template>
@@ -9,6 +10,7 @@ import Sidebar from './components/Sidebar.vue'
     <header>
       <nav>
         <Sidebar/> 
+        <Navbar/> 
         <RouterLink to="/">Home</RouterLink>
         <RouterLink to="/about">About</RouterLink>
       </nav>
