@@ -22,7 +22,7 @@ export default {
 <template>
     <div class="sidebar">
         <div class="sidebar-heading">
-            <!-- <img class="profile-img" src="../assets/profile.png" alt=""> -->
+            <img class="profile-img" src="../assets/profile.png" alt="">
             <b class="name">{{ Name }}</b>
         </div>
 
