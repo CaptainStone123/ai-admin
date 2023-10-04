@@ -60,68 +60,49 @@ export default {
 </template>
 
 <style scoped>
-
 .sidebar {
-    position: fixed;
-    left: 0;
-    top: 4rem;
-    z-index: 50;
-    background-color: white;
+    position: fixed; left: 0; top: 4rem; z-index: 50;
+    background-color: white; color: rgb(70, 70, 70);
     box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.3);
-    height: calc(100vh - 4rem);
-    width: 17rem;
+    height: calc(100vh - 4rem);  width: 17rem;
     transition: top 0.3s;
     padding:2rem;
-    color: rgb(70, 70, 70);
     font-size: 1rem;
 }
-
-
 .sidebar p{
     margin: 20px 10px 20px 10px;
-
 }
-
 .sidebar-heading{
     display: flex;
     align-items: center;
 }
-
 .profile-img {
     height: 60px;
     border-radius: 50%; /* Makes the image a circle */
     box-shadow: 0 0 2px rgba(37, 37, 37, 0.5);
 }
-
 .name{
     font-size: 1.2rem;
 }
-
 .sidebar-heading .name{
     margin: 0 10px 0 10px;
 }
-
 .router-link {
     text-decoration: none;
     transition: background-color 0.3s, font-weight 0.3s;
 }
-
 .router-link.selected {
     font-weight: bold;
     background-color: #E6E9EB;
 }
-
 .link-content {
     display: flex;
     align-items: center;
     padding: 10px ;
 }
-
 .link-content i{
     padding: 0 12px 0 0;
-
 }
-
 </style>
 
  

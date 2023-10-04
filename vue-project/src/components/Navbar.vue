@@ -22,8 +22,7 @@
 }
 .navbar ul{
     display: flex; align-items: center;
-    margin: 0 2rem 0 2rem;
-}
+ }
 .navbar ul li{
     padding: 0 .6rem 0 .6rem;
 }
