@@ -1,83 +1,3 @@
-
-<script>
-import axios from 'axios';
-
-export default {
-  data() {
-    return {
-      newName: '', 
-      newPersonality: '', 
-      newIntro: '', 
-      selectedImage: null,
-      newModel: '',
-      newIntlimit: '',
-      sliderValue: 50,
-    };
-  },
-
-  computed: {
-    temperatureLevel() {
-      if (this.sliderValue >= 0 && this.sliderValue <= 33) {
-        return 'Low';
-      } else if (this.sliderValue >= 34 && this.sliderValue <= 66) {
-        return 'Average';
-      } else {
-        return 'High';
-      }
-    },
-  },
-
-  methods: {
-    async updateProfile() {
-  try {
-    const updateData = {};
-
-    if (this.newName.trim() !== '') {
-      updateData.Name = this.newName;
-    }
-
-    if (this.newPersonality.trim() !== '') {
-      updateData.Personality = this.newPersonality;
-    }
-
-    if (this.newIntro.trim() !== '') {
-      updateData.Introduction = this.newIntro;
-    }
-
-    if (this.newModel.trim() !== '') {
-      updateData.Model = this.newModel;
-    }
-
-    if (this.newIntlimit !== '' && !isNaN(this.newIntlimit)) {
-      updateData.Intlimit = parseInt(this.newIntlimit, 10);
-    }
-
-    updateData.Temperature = this.temperatureLevel;
-
-    if (this.selectedImage) {
-      updateData.PImage = this.selectedImage;
-    }
-
-    if (Object.keys(updateData).length > 0) {
-      const response = await axios.put('http://localhost:3000/api/updateProfile', updateData);
-
-      console.log('Profile updated successfully:', response.data);
-    } else {
-      console.log('No fields to update.');
-    }
-  } catch (error) {
-    console.error('Error updating profile:', error);
-    }
-  },
-
-  handleImageUpload(event) {
-    this.selectedImage = event.target.files[0];
-  },
-
-  },
-};
-</script>
-
 <template>
   <div class="container">
     <div class="items">
@@ -85,9 +5,9 @@ export default {
         <h2 class="box-heading"><b>AI Profile</b></h2>
         <div>
           <label for="name">Name</label><br>
-          <input placeholder="AI name here" class="input-box" type="text" id="name" name="name" v-model="newName"><br><br>
-          <label for="role-and-personality">Personality</label><br>
-          <textarea placeholder="Enter AI personality." class="text-area" name="" id="" cols="30" rows="10" v-model="newPersonality"></textarea><br><br>
+          <input placeholder="AI name here" class="input-box" type="text" id="name" name="name" v-model="newName"><br><br> 
+          <label for="role">Role</label><br>
+          <textarea placeholder="Enter AI Role." class="text-area" name="" id="" cols="30" rows="10" v-model="newRole"></textarea><br><br>
           <label for="introduction-message">Introduction Message</label><br>
           <textarea placeholder="Enter AI introduction message." class="text-area" name="" id="" cols="30" rows="10" v-model="newIntro"></textarea><br><br>
           <label for="imageUpload">Profile image:</label> <br> 
@@ -212,3 +132,155 @@ input{
 
 </style>
 
+
+<script>
+import axios from 'axios';
+
+export default {
+  data() {
+    return {
+      newName: '', 
+      newRole: '', 
+      newIntro: '', 
+      selectedImage: null,
+      newModel: '',
+      newIntlimit: '',
+      sliderValue: 50,
+    };
+  },
+  mounted() {
+    axios
+    .get('http://localhost:3000/api/getNameFromMongoDB')
+    .then(response => {
+      console.log('ClassifierName API Response:', response.data);
+      if (response.data && response.data.Name) {
+        this.newName = response.data.Name;
+      } else {
+        console.error('Invalid API response for ClassifierName:', response.data);
+      }
+    })
+    .catch(error => {
+      console.error('Error fetching ClassifierName:', error);
+    });
+
+    axios
+    .get('http://localhost:3000/api/getRoleFromMongoDB')
+    .then(response => {
+      console.log('ClassifierName API Response:', response.data);
+      if (response.data && response.data.Role) {
+        this.newRole = response.data.Role;
+      } else {
+        console.error('Invalid API response for ClassifierName:', response.data);
+      }
+    })
+    .catch(error => {
+      console.error('Error fetching ClassifierName:', error);
+    });
+
+    axios
+    .get('http://localhost:3000/api/getIntroductionFromMongoDB')
+    .then(response => {
+      console.log('ClassifierName API Response:', response.data);
+      if (response.data && response.data.Introduction) {
+        this.newIntro = response.data.Introduction;
+      } else {
+        console.error('Invalid API response for ClassifierName:', response.data);
+      }
+    })
+    .catch(error => {
+      console.error('Error fetching ClassifierName:', error);
+    });
+
+    axios
+    .get('http://localhost:3000/api/getModelFromMongoDB')
+    .then(response => {
+      console.log('ClassifierName API Response:', response.data);
+      if (response.data && response.data.Model) {
+        this.newModel = response.data.Model;
+      } else {
+        console.error('Invalid API response for ClassifierName:', response.data);
+      }
+    })
+    .catch(error => {
+      console.error('Error fetching ClassifierName:', error);
+    });
+
+    axios
+    .get('http://localhost:3000/api/getIntlimitFromMongoDB')
+    .then(response => {
+      console.log('ClassifierName API Response:', response.data);
+      if (response.data && response.data.Intlimit) {
+        this.newIntlimit = response.data.Intlimit;
+      } else {
+        console.error('Invalid API response for ClassifierName:', response.data);
+      }
+    })
+    .catch(error => {
+      console.error('Error fetching ClassifierName:', error);
+    });
+
+  },
+
+  computed: {
+    temperatureLevel() {
+      if (this.sliderValue >= 0 && this.sliderValue <= 33) {
+        return 'Low';
+      } else if (this.sliderValue >= 34 && this.sliderValue <= 66) {
+        return 'Average';
+      } else {
+        return 'High';
+      }
+    },
+  },
+
+  methods: {
+    async updateProfile() {
+  try {
+    const updateData = {};
+
+    if (this.newName.trim() !== '') {
+      updateData.Name = this.newName;
+    }
+
+    if (this.newRole.trim() !== '') {
+      updateData.Role = this.newRole;
+    }
+
+    if (this.newIntro.trim() !== '') {
+      updateData.Introduction = this.newIntro;
+    }
+
+    if (this.newModel.trim() !== '') {
+      updateData.Model = this.newModel;
+    }
+
+    if (this.newIntlimit !== '' && !isNaN(this.newIntlimit)) {
+      updateData.Intlimit = parseInt(this.newIntlimit, 10);
+    }
+
+    updateData.Temperature = this.temperatureLevel;
+
+    if (this.selectedImage) {
+      updateData.PImage = this.selectedImage;
+    }
+
+    if (Object.keys(updateData).length > 0) {
+      const response = await axios.put('http://localhost:3000/api/updateProfile', updateData);
+
+      console.log('Profile updated successfully:', response.data);
+    } else {
+      console.log('No fields to update.');
+    }
+    
+  } catch (error) {
+    console.error('Error updating profile:', error);
+    }
+  },
+
+  handleImageUpload(event) {
+    this.selectedImage = event.target.files[0];
+  },
+
+  },
+};
+</script>

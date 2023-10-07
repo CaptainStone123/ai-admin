@@ -1,12 +1,10 @@
- <script setup>
-</script>
 <template>
   <div class="container">
     <div class="items">
       <section class="box">
         <span>
           <label for="datepicker"><b>Select Date </b></label>
-          <input class="date-input" type="date" id="datepicker" name="selectedDate">
+          <input class="date-input" type="date" id="datepicker" name="selectedDate" v-model="selectedDate">
         </span>
       </section>
 
@@ -16,17 +14,17 @@
         <dl>
           <span class="ue-row1">
               <dt><b>Sessions: </b></dt>
-              <dd><b>21</b></dd>    
+              <dd><b>{{ SessionCount }}</b></dd>    
           </span>
     
           <span class="ue-row2">
             <dt>No. user inquiries:</dt>
-            <dd>15</dd>
+            <dd>{{ DurationCount }}</dd>
           </span>
           
           <span class="ue-row2">
             <dt>Average Session Duration:</dt>
-            <dd>3</dd>
+            <dd>{{ AverageDuration }}</dd>
           </span>
       
         </dl>
@@ -34,77 +32,12 @@
       <form class="keywords">
         <h2 class="box-heading"><b>Top Keywords</b></h2>
         <div class="keyword-container">
-          <span class="keyword-item">
+          <span class="keyword-item" v-for="(keyword, index) in topKeywords.slice(0, topTen)" :key="keyword._id">
             <ul>
-              <li>1. </li>
-              <li>Admission</li>
-              <li> 60</li>
-             </ul>
+              <li>{{ index + 1 }}. {{ keyword._id }}</li>
+              <li>{{ keyword.count }}</li>
+            </ul>
           </span>
-          <span class="keyword-item">
-            <ul>
-              <li>2. </li>
-              <li>Enrollment</li>
-              <li> 57</li>
-             </ul>
-          </span>
-          <span class="keyword-item">
-            <ul>
-              <li>3. </li>
-              <li>Programs</li>
-              <li> 55</li>
-             </ul>
-          </span>
-          <span class="keyword-item">
-            <ul>
-              <li>4. </li>
-              <li>Email</li>
-              <li> 48</li>
-             </ul>
-          </span>
-          <span class="keyword-item">
-            <ul>
-              <li>5. </li>
-              <li> Courses</li>
-              <li> 44</li>
-             </ul>
-          </span>
-          <span class="keyword-item">
-            <ul>
-              <li>6. </li>
-              <li>Scholarships</li>
-              <li> 40</li>
-             </ul>
-          </span>
-          <span class="keyword-item">
-            <ul>
-              <li>7. </li>
-              <li>Transfer</li>
-              <li> 39</li>
-             </ul>
-          </span>
-          <span class="keyword-item">
-            <ul>
-              <li>8. </li>
-              <li>Shift</li>
-              <li> 37</li>
-             </ul>
-          </span>
-          <span class="keyword-item">
-            <ul>
-              <li>9. </li>
-              <li>Community Service</li>
-              <li> 35</li>
-             </ul>
-          </span>
-          <span class="keyword-item">
-            <ul>
-              <li>10. </li>
-              <li>History</li>
-              <li>20</li>
-             </ul>
-          </span>
-     
         </div>
       </form>
     </section>
@@ -115,69 +48,26 @@
         <table>
           <thead>
             <tr>
-                <th width="10%">ID.</th>
-                <th width="20%">Session no.</th>
-                <th width="20%">Duration.</th>
-                <th width="30%">Details</th>
-                <th width="20%" > </th>
+                <th width="10%">No.</th>
+                <th width="20%">Session ID</th>
+                <th width="20%">Duration</th>
+                <th width="50%">Details</th>
+                <!-- <th width="0%" > </th> -->
              </tr>
           </thead>
           <tbody>
-            <tr>
-              <td>1.</td>
-              <td>233</td>
-              <td>5</td>
-              <td>Can i ask about admissions?</td>
-              <td class="details-btn-td"><button class="details-tbn">view</button></td>
-            </tr>
-            <tr>
-              <td>2</td>
-              <td>234</td>
-              <td>5</td>
-              <td>What is your name?</td>
-              <td class="details-btn-td"><button class="details-tbn">view</button></td>
-            </tr>
-            <tr>
-              <td>3</td>
-              <td>235</td>
-              <td>7</td>
-              <td>What are the available programs?</td>
-              <td class="details-btn-td"><button class="details-tbn">view</button></td>
-            </tr>
-            <tr>
-              <td>4</td>
-              <td>236</td>
-              <td>8</td>
-              <td>Who is the president of the university?</td>
-              <td class="details-btn-td"><button class="details-tbn">view</button></td>
-            </tr>
-            <tr>
-              <td>5</td>
-              <td>237</td>
-              <td>7</td>
-              <td>How much is tuition for IT?</td>
-              <td class="details-btn-td"><button class="details-tbn">view</button></td>
-            </tr>
-            <tr>
-              <td>6</td>
-              <td>238</td>
-              <td>9</td>
-              <td>How can i pay tuition?</td>
-              <td class="details-btn-td"><button class="details-tbn">view</button></td>
-            </tr>
-            <tr>
-              <td>7</td>
-              <td>239</td>
-              <td>4</td>
-              <td>Can you make my homework?</td>
-              <td class="details-btn-td"><button class="details-tbn">view</button></td>
-            </tr>
-            <tr>
-              <td>8</td>
-              <td>240</td>
-              <td>5</td>
-              <td>do you offer architecture?</td>
-              <td class="details-btn-td"><button class="details-tbn">view</button></td>
+            <tr v-for="(session, index) in filteredSessions" :key="session.customId">
+              <td>{{ index + 1 }}</td>
+              <td>{{ session.customId }}</td>
+              <td>{{ session.duration }}</td>
+              <td>
+                <ul>
+                  <li v-for="(detail, detailIndex) in session.details" :key="detailIndex">
+                    • {{ detail.content }}
+                  </li>
+                </ul>
+              </td>
+              <!-- <td class="details-btn-td"><button class="details-tbn">view</button></td> -->
             </tr>
           </tbody>
         </table>
@@ -188,6 +78,158 @@
    
   </div>
 </template>
+
+<script>
+import axios from 'axios';
+
+export default {
+  data() {
+    return {
+      sessions: [],
+      SessionCount: '',
+      DurationCount: '',
+      AverageDuration: '',
+      selectedDate: null,
+      topKeywords: [],
+      topTen: 10,
+    };
+  },
+  created() {
+    axios.get('http://localhost:3000/api/getAllSessions')
+    .then(response => {
+        this.sessions = response.data;
+        this.calculateDurationCount();
+      })
+      .catch(error => {
+        console.error('Error fetching sessions:', error);
+      });
+    
+    axios.get('http://localhost:3000/api/getKeywords')
+    .then(response => {
+      this.topKeywords = response.data.sort((a, b) => b.count - a.count);
+      })
+      .catch(error => {
+        console.error('Error fetching sessions:', error);
+      });
+  },
+  mounted() {
+    axios
+      .get('http://localhost:3000/api/SessionCount')
+      .then(response => {
+        console.log('SessionCount API Response:', response.data);
+        if (response.data && response.data.count) {
+          this.SessionCount = response.data.count;
+          this.calculateAverageDuration();
+        } else {
+          console.error('Invalid API response for SessionCount:', response.data);
+        }
+      })
+      .catch(error => {
+        console.error('Error fetching SessionCount:', error);
+      });
+  },
+  computed: {
+    filteredSessions() {
+    if (!this.selectedDate) {
+      return this.sessions;
+    }
+
+    const selectedDate = new Date(this.selectedDate);
+    const selectedYear = selectedDate.getFullYear();
+    const selectedMonth = selectedDate.getMonth() + 1;
+    const selectedDay = selectedDate.getDate();
+
+    return this.sessions.filter((session) => {
+      const sessionDate = new Date(session.date);
+      const sessionYear = sessionDate.getFullYear();
+      const sessionMonth = sessionDate.getMonth() + 1;
+      const sessionDay = sessionDate.getDate();
+
+      return (
+        selectedYear === sessionYear &&
+        selectedMonth === sessionMonth &&
+        selectedDay === sessionDay
+      );
+    });
+  },
+  },
+  methods: {
+  calculateDurationCount() {
+    let count = 0;
+    for (const session of this.sessions) {
+      if (session.details && Array.isArray(session.details)) {
+        count += session.details.length;
+      }
+    }
+    this.DurationCount = count;
+  },
+
+  calculateAverageDuration() {
+    let totalDuration = 0;
+    for (const session of this.sessions) {
+      totalDuration += session.duration;
+    }
+    const averageDuration = totalDuration / this.sessions.length;
+    this.AverageDuration = isNaN(averageDuration) ? 'N/A' : averageDuration.toFixed(2);
+  },
+
+  filterSessionsByDate() {
+    if (!this.selectedDate) {
+      return this.sessions;
+    }
+
+    const selectedDate = new Date(this.selectedDate);
+    const selectedYear = selectedDate.getFullYear();
+    const selectedMonth = selectedDate.getMonth() + 1;
+    const selectedDay = selectedDate.getDate();
+
+    
+    return this.sessions.filter((session) => {
+      const sessionDate = new Date(session.date);
+      const sessionYear = sessionDate.getFullYear();
+      const sessionMonth = sessionDate.getMonth() + 1;
+      const sessionDay = sessionDate.getDate();
+
+      return (
+        selectedYear === sessionYear &&
+        selectedMonth === sessionMonth &&
+        selectedDay === sessionDay
+      );
+    });
+  },
+
+  recalculateUserEngagement() {
+  
+    const filteredSessions = this.filterSessionsByDate();
+
+    let count = 0;
+    for (const session of filteredSessions) {
+      if (session.details && Array.isArray(session.details)) {
+        count += session.details.length;
+      }
+    }
+    this.DurationCount = count;
+
+    this.SessionCount = filteredSessions.length;
+
+    let totalDuration = 0;
+    for (const session of filteredSessions) {
+      totalDuration += session.duration;
+    }
+    const averageDuration = totalDuration / filteredSessions.length;
+    this.AverageDuration = isNaN(averageDuration) ? 'N/A' : averageDuration.toFixed(2);
+  },
+
+  },
+  watch: {
+    selectedDate: 'recalculateUserEngagement',
+  }
+}
+</script>
+
+
+
+
 
 <style scoped> 
 .keyword-container{
