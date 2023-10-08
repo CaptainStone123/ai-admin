@@ -150,7 +150,7 @@ export default {
   },
   mounted() {
     axios
-    .get('http://localhost:3000/api/getNameFromMongoDB')
+    .get('http://localhost:5000/api/getNameFromMongoDB')
     .then(response => {
       console.log('ClassifierName API Response:', response.data);
       if (response.data && response.data.Name) {
@@ -164,7 +164,7 @@ export default {
     });
 
     axios
-    .get('http://localhost:3000/api/getRoleFromMongoDB')
+    .get('http://localhost:5000/api/getRoleFromMongoDB')
     .then(response => {
       console.log('ClassifierName API Response:', response.data);
       if (response.data && response.data.Role) {
@@ -178,7 +178,7 @@ export default {
     });
 
     axios
-    .get('http://localhost:3000/api/getIntroductionFromMongoDB')
+    .get('http://localhost:5000/api/getIntroductionFromMongoDB')
     .then(response => {
       console.log('ClassifierName API Response:', response.data);
       if (response.data && response.data.Introduction) {
@@ -192,7 +192,7 @@ export default {
     });
 
     axios
-    .get('http://localhost:3000/api/getModelFromMongoDB')
+    .get('http://localhost:5000/api/getModelFromMongoDB')
     .then(response => {
       console.log('ClassifierName API Response:', response.data);
       if (response.data && response.data.Model) {
@@ -206,7 +206,7 @@ export default {
     });
 
     axios
-    .get('http://localhost:3000/api/getIntlimitFromMongoDB')
+    .get('http://localhost:5000/api/getIntlimitFromMongoDB')
     .then(response => {
       console.log('ClassifierName API Response:', response.data);
       if (response.data && response.data.Intlimit) {
@@ -265,7 +265,7 @@ export default {
     }
 
     if (Object.keys(updateData).length > 0) {
-      const response = await axios.put('http://localhost:3000/api/updateProfile', updateData);
+      const response = await axios.put('http://localhost:5000/api/updateProfile', updateData);
 
       console.log('Profile updated successfully:', response.data);
     } else {

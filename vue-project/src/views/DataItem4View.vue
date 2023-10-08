@@ -63,7 +63,7 @@ export default {
   },
   mounted() {
     axios
-      .get('http://localhost:3000/api/getClassNameFromMongoDB/admissions')
+      .get('http://localhost:5000/api/getClassNameFromMongoDB/admissions')
       .then(response => {
         console.log('ClassifierName API Response:', response.data);
         if (response.data && response.data.name) {
@@ -77,7 +77,7 @@ export default {
       });
   
     axios
-      .get('http://localhost:3000/api/getAdmissionsFromMongoDB')
+      .get('http://localhost:5000/api/getAdmissionsFromMongoDB')
       .then(response => {
         if (response.data && response.data.admissionInfo) {
           this.Content = response.data.admissionInfo; 
@@ -103,7 +103,7 @@ export default {
     }
 
     if (Object.keys(updateData).length > 0) {
-      const response = await axios.put('http://localhost:3000/api/updateAdmissions', updateData);
+      const response = await axios.put('http://localhost:5000/api/updateAdmissions', updateData);
 
       console.log('information updated successfully:', response.data);
     } else {

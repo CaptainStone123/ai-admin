@@ -7,7 +7,7 @@ export default {
         };
     },
     mounted() {
-        axios.get('http://localhost:3000/api/getNameFromMongoDB')
+        axios.get('http://localhost:5000/api/getNameFromMongoDB')
         .then(response => {
             this.Name = response.data.Name;
         })
