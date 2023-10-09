@@ -146,6 +146,9 @@ export default {
             img.onload = () => {
                 this.$refs.profileImage.src = src;
             };
+            img.onerror = () => {
+                console.error('Error loading image:', src);
+            };
             img.src = src;
         },
     },
