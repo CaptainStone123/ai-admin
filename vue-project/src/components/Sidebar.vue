@@ -1,7 +1,7 @@
 <template>
     <div class="sidebar">
         <div class="sidebar-heading">
-            <img class="profile-img" ref="profileImage" alt="">
+            <img class="profile-img" src="../assets/stacy.png" alt="">
             <b class="name">{{ Name }}</b>
         </div>
 
