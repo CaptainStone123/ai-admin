@@ -1,7 +1,7 @@
 <template>
     <div class="sidebar">
         <div class="sidebar-heading">
-            <img class="profile-img" :src="profileImageSrc" alt="">
+            <img class="profile-img" ref="profileImage" alt="">
             <b class="name">{{ Name }}</b>
         </div>
 
@@ -114,7 +114,6 @@ export default {
     data() {
         return {
             Name: '',
-            profileImageSrc: '',
         };
     },
     mounted() {
@@ -142,7 +141,16 @@ export default {
             });
     },
     methods: {
-        // this.profileImageSrc = src;
+        loadImage(src) {
+            const img = new Image();
+            img.onload = () => {
+                this.$refs.profileImage.src = src;
+            };
+            img.onerror = () => {
+                console.error('Error loading image:', src);
+            };
+            img.src = src;
+        },
     },
 };
 </script>
