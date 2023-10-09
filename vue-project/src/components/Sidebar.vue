@@ -110,47 +110,32 @@
 import axios from 'axios';
 
 export default {
-    name: 'Sidebar',
-    data() {
-        return {
-            Name: '',
-        };
-    },
-    mounted() {
-        axios.get('https://blitzkrieg-node-server.vercel.app/api/getNameFromMongoDB')
-        .then(response => {
-            this.Name = response.data.Name;
-        })
-        .catch(error => {
-            console.error('Error fetching Name:', error);
-            console.log('Response status:', error.response ? error.response.status : 'N/A');
-            console.log('Response data:', error.response ? error.response.data : 'N/A');
-        });
+  name: 'Sidebar',
+  data() {
+    return {
+      Name: '',
+      imageSrc: '',  
+    };
+  },
+  mounted() {
+    axios
+      .get('https://blitzkrieg-node-server.vercel.app/api/getNameFromMongoDB')
+      .then(response => {
+        this.Name = response.data.Name;
+      })
+      .catch(error => {
+        console.error('Error fetching Name:', error);
+      });
 
-        axios.get('https://blitzkrieg-node-server.vercel.app/api/getImageFromMongoDB')
-            .then(response => {
-                const imageName = response.data.Image || 'stacy.png'; 
-                const imageSrc = `../assets/${imageName}`;
-
-                console.log(imageSrc);
-                
-                this.loadImage(imageSrc);
-            })
-            .catch(error => {
-                console.error('Error fetching image:', error);
-            });
-    },
-    methods: {
-        loadImage(src) {
-            const img = new Image();
-            img.onload = () => {
-                this.$refs.profileImage.src = src;
-            };
-            img.onerror = () => {
-                console.error('Error loading image:', src);
-            };
-            img.src = src;
-        },
-    },
+    axios
+      .get('https://blitzkrieg-node-server.vercel.app/api/getImageFromMongoDB')
+      .then(response => {
+        const imageName = response.data.Image || 'stacy.png';
+        this.imageSrc = `../assets/${imageName}`; // Set image source directly
+      })
+      .catch(error => {
+        console.error('Error fetching image:', error);
+      });
+  },
 };
 </script>
