@@ -130,7 +130,7 @@ export default {
         axios.get('https://blitzkrieg-node-server.vercel.app/api/getImageFromMongoDB')
             .then(response => {
                 const imageName = response.data.Image || 'stacy.png'; 
-                const imageSrc = `../assets/${imageName}`;
+                const imageSrc = `../src/assets/${imageName}`;
 
                 console.log(imageSrc);
                 
