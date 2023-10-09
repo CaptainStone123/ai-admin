@@ -142,7 +142,7 @@ export default {
             });
     },
     methods: {
-        this.profileImageSrc = src;
+        // this.profileImageSrc = src;
     },
 };
 </script>
