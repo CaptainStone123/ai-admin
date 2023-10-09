@@ -10,8 +10,12 @@
           <textarea placeholder="Enter AI Role." class="text-area" name="" id="" cols="30" rows="10" v-model="newRole"></textarea><br><br>
           <label for="introduction-message">Introduction Message</label><br>
           <textarea placeholder="Enter AI introduction message." class="text-area" name="" id="" cols="30" rows="10" v-model="newIntro"></textarea><br><br>
-          <label for="imageUpload">Profile image:</label> <br> 
-          <input class="upload-img" type="file" name="image" accept="image/*" @change="handleImageUpload">
+          <label for="imageSelect">Profile image:</label> <br> 
+          <select class="select-img" id="imageSelect" v-model="Image">
+              <option value="stacy.png">Stacy</option>
+              <option value="stanley.png">Stanley</option>
+              <option value="UA-Logo.png">Ua Logo</option>
+            </select>
         </div>
       </div>
 
@@ -142,9 +146,9 @@ export default {
       newName: '', 
       newRole: '', 
       newIntro: '', 
-      selectedImage: null,
       newModel: '',
       newIntlimit: '',
+      Image: '',
       sliderValue: 50,
     };
   },
@@ -162,6 +166,7 @@ export default {
     .catch(error => {
       console.error('Error fetching ClassifierName:', error);
     });
+    
 
     axios
     .get('http://localhost:5000/api/getRoleFromMongoDB')
@@ -258,11 +263,12 @@ export default {
       updateData.Intlimit = parseInt(this.newIntlimit, 10);
     }
 
+    if (this.Image.trim() !== '') {
+      updateData.Image = this.Image;
+    }
+
     updateData.Temperature = this.temperatureLevel;
 
-    if (this.selectedImage) {
-      updateData.PImage = this.selectedImage;
-    }
 
     if (Object.keys(updateData).length > 0) {
       const response = await axios.put('http://localhost:5000/api/updateProfile', updateData);
@@ -271,14 +277,9 @@ export default {
     } else {
       console.log('No fields to update.');
     }
-    
   } catch (error) {
     console.error('Error updating profile:', error);
-    }
-  },
-
-  handleImageUpload(event) {
-    this.selectedImage = event.target.files[0];
+  }
   },
 
   },
