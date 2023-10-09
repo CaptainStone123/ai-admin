@@ -1,7 +1,7 @@
 <template>
     <div class="sidebar">
         <div class="sidebar-heading">
-            <img class="profile-img" ref="profileImage" alt="">
+            <img class="profile-img" :src="profileImageSrc" alt="">
             <b class="name">{{ Name }}</b>
         </div>
 
@@ -114,6 +114,7 @@ export default {
     data() {
         return {
             Name: '',
+            profileImageSrc: '',
         };
     },
     mounted() {
@@ -130,7 +131,7 @@ export default {
         axios.get('https://blitzkrieg-node-server.vercel.app/api/getImageFromMongoDB')
             .then(response => {
                 const imageName = response.data.Image || 'stacy.png'; 
-                const imageSrc = '../assets/${imageName}';
+                const imageSrc = `../assets/${imageName}`;
 
                 console.log(imageSrc);
                 
@@ -141,13 +142,7 @@ export default {
             });
     },
     methods: {
-        loadImage(src) {
-            const img = new Image();
-            img.onload = () => {
-                this.$refs.profileImage.src = src;
-            };
-            img.src = src;
-        },
+        this.profileImageSrc = src;
     },
 };
 </script>
