@@ -14,7 +14,7 @@ import axios from 'axios';
     },
     mounted() {
       axios
-      .get('http://localhost:5000/api/getClassifierNameFromMongoDB')
+      .get('https://blitzkrieg-node-server.vercel.app/api/getClassifierNameFromMongoDB')
       .then(response => {
         console.log('ClassifierName API Response:', response.data);
         if (response.data && response.data.name) {
@@ -28,7 +28,7 @@ import axios from 'axios';
       });
 
       axios
-      .get('http://localhost:5000/api/getClassNameFromMongoDB/frequently_asked')
+      .get('https://blitzkrieg-node-server.vercel.app/api/getClassNameFromMongoDB/frequently_asked')
       .then(response => {
         if (response.data && response.data.name) {
           this.faq = response.data.name;
@@ -41,7 +41,7 @@ import axios from 'axios';
       });
 
       axios
-      .get('http://localhost:5000/api/getClassNameFromMongoDB/about_ua')
+      .get('https://blitzkrieg-node-server.vercel.app/api/getClassNameFromMongoDB/about_ua')
       .then(response => {
         if (response.data && response.data.name) {
           this.about = response.data.name;
@@ -54,7 +54,7 @@ import axios from 'axios';
       });
 
       axios
-      .get('http://localhost:5000/api/getClassNameFromMongoDB/admissions')
+      .get('https://blitzkrieg-node-server.vercel.app/api/getClassNameFromMongoDB/admissions')
       .then(response => {
         if (response.data && response.data.name) {
           this.admissions = response.data.name;
@@ -67,7 +67,7 @@ import axios from 'axios';
       });
 
       axios
-      .get('http://localhost:5000/api/getClassNameFromMongoDB/academics')
+      .get('https://blitzkrieg-node-server.vercel.app/api/getClassNameFromMongoDB/academics')
       .then(response => {
         if (response.data && response.data.name) {
           this.academics = response.data.name;

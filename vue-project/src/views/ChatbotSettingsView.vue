@@ -154,7 +154,7 @@ export default {
   },
   mounted() {
     axios
-    .get('http://localhost:5000/api/getNameFromMongoDB')
+    .get('https://blitzkrieg-node-server.vercel.app/api/getNameFromMongoDB')
     .then(response => {
       console.log('ClassifierName API Response:', response.data);
       if (response.data && response.data.Name) {
@@ -169,7 +169,7 @@ export default {
     
 
     axios
-    .get('http://localhost:5000/api/getRoleFromMongoDB')
+    .get('https://blitzkrieg-node-server.vercel.app/api/getRoleFromMongoDB')
     .then(response => {
       console.log('ClassifierName API Response:', response.data);
       if (response.data && response.data.Role) {
@@ -183,7 +183,7 @@ export default {
     });
 
     axios
-    .get('http://localhost:5000/api/getIntroductionFromMongoDB')
+    .get('https://blitzkrieg-node-server.vercel.app/api/getIntroductionFromMongoDB')
     .then(response => {
       console.log('ClassifierName API Response:', response.data);
       if (response.data && response.data.Introduction) {
@@ -197,7 +197,7 @@ export default {
     });
 
     axios
-    .get('http://localhost:5000/api/getModelFromMongoDB')
+    .get('https://blitzkrieg-node-server.vercel.app/api/getModelFromMongoDB')
     .then(response => {
       console.log('ClassifierName API Response:', response.data);
       if (response.data && response.data.Model) {
@@ -211,7 +211,7 @@ export default {
     });
 
     axios
-    .get('http://localhost:5000/api/getIntlimitFromMongoDB')
+    .get('https://blitzkrieg-node-server.vercel.app/api/getIntlimitFromMongoDB')
     .then(response => {
       console.log('ClassifierName API Response:', response.data);
       if (response.data && response.data.Intlimit) {
@@ -271,7 +271,7 @@ export default {
 
 
     if (Object.keys(updateData).length > 0) {
-      const response = await axios.put('http://localhost:5000/api/updateProfile', updateData);
+      const response = await axios.put('https://blitzkrieg-node-server.vercel.app/api/updateProfile', updateData);
 
       console.log('Profile updated successfully:', response.data);
     } else {

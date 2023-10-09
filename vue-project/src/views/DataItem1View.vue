@@ -11,7 +11,7 @@ export default {
   },
   mounted() {
     axios
-      .get('http://localhost:5000/api/getClassifierNameFromMongoDB')
+      .get('https://blitzkrieg-node-server.vercel.app/api/getClassifierNameFromMongoDB')
       .then(response => {
         console.log('ClassifierName API Response:', response.data);
         if (response.data && response.data.name) {
@@ -25,7 +25,7 @@ export default {
       });
   
     axios
-      .get('http://localhost:5000/api/getClassifierFromMongoDB')
+      .get('https://blitzkrieg-node-server.vercel.app/api/getClassifierFromMongoDB')
       .then(response => {
         if (response.data && response.data.classifier) {
           this.Content = response.data.classifier; 
@@ -51,7 +51,7 @@ export default {
     }
 
     if (Object.keys(updateData).length > 0) {
-      const response = await axios.put('http://localhost:5000/api/updateClassifier', updateData);
+      const response = await axios.put('https://blitzkrieg-node-server.vercel.app/api/updateClassifier', updateData);
 
       console.log('information updated successfully:', response.data);
     } else {

@@ -63,7 +63,7 @@ export default {
   },
   mounted() {
     axios
-      .get('http://localhost:5000/api/getClassNameFromMongoDB/frequently_asked')
+      .get('https://blitzkrieg-node-server.vercel.app/api/getClassNameFromMongoDB/frequently_asked')
       .then(response => {
         console.log('ClassifierName API Response:', response.data);
         if (response.data && response.data.name) {
@@ -77,7 +77,7 @@ export default {
       });
   
     axios
-      .get('http://localhost:5000/api/getFaQFromMongoDB')
+      .get('https://blitzkrieg-node-server.vercel.app/api/getFaQFromMongoDB')
       .then(response => {
         if (response.data && response.data.faq) {
           this.Content = response.data.faq; 
@@ -103,7 +103,7 @@ export default {
     }
 
     if (Object.keys(updateData).length > 0) {
-      const response = await axios.put('http://localhost:5000/api/updateFaQ', updateData);
+      const response = await axios.put('https://blitzkrieg-node-server.vercel.app/api/updateFaQ', updateData);
 
       console.log('information updated successfully:', response.data);
     } else {

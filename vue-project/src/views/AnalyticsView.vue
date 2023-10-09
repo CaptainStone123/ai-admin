@@ -95,7 +95,7 @@ export default {
     };
   },
   created() {
-    axios.get('http://localhost:5000/api/getAllSessions')
+    axios.get('https://blitzkrieg-node-server.vercel.app/api/getAllSessions')
     .then(response => {
         this.sessions = response.data;
         this.calculateDurationCount();
@@ -104,7 +104,7 @@ export default {
         console.error('Error fetching sessions:', error);
       });
     
-    axios.get('http://localhost:5000/api/getKeywords')
+    axios.get('https://blitzkrieg-node-server.vercel.app/api/getKeywords')
     .then(response => {
       this.topKeywords = response.data.sort((a, b) => b.count - a.count);
       })
@@ -114,7 +114,7 @@ export default {
   },
   mounted() {
     axios
-      .get('http://localhost:5000/api/SessionCount')
+      .get('https://blitzkrieg-node-server.vercel.app/api/SessionCount')
       .then(response => {
         console.log('SessionCount API Response:', response.data);
         if (response.data && response.data.count) {
