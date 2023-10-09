@@ -130,7 +130,7 @@ export default {
         axios.get('http://localhost:5000/api/getImageFromMongoDB')
             .then(response => {
                 const imageName = response.data.Image || 'stacy.png'; 
-                const imageSrc = `./vue-project/src/assets/${imageName}`;
+                const imageSrc = `../assets/${imageName}`;
 
                 console.log(imageSrc);
                 
