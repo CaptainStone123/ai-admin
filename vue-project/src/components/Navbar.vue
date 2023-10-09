@@ -3,7 +3,7 @@
 <template>
     <nav class="navbar">
         <ul>
-            <img src="../assets/stacy.png" alt="">
+            <img src="../assets/UA-Logo.png" alt="">
             <li><b>UA Chat Assistant</b></li>
         </ul>
         <ul>
