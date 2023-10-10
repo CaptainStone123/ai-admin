@@ -14,6 +14,11 @@ const router = createRouter({
   routes: [
     {
       path: '/',
+      name: 'main',
+      component: AnalyticsView
+    },
+    {
+      path: '/analytics',
       name: 'analytics',
       component: AnalyticsView
     },
