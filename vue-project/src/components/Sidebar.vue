@@ -15,7 +15,7 @@
                     Testing
                 </div>
             </RouterLink>
-            <RouterLink to="/" :class="['router-link', { 'selected': $route.path === '/' }]">
+            <RouterLink to="/analytics" :class="['router-link', { 'selected': $route.path === '/analytics' }]">
                 <div class="link-content">
                     <i class="fa-solid fa-chart-simple"></i>
                     Analytics
