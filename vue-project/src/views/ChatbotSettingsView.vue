@@ -1,3 +1,163 @@
+
+<script>
+import axios from 'axios';
+
+export default {
+  data() {
+    return {
+      newName: '', 
+      newRole: '', 
+      newIntro: '', 
+      newModel: '',
+      newIntlimit: '',
+      Image: '',
+      sliderValue: 50,
+    };
+  },
+  mounted() {
+    axios
+    .get('https://uaai-api.vercel.app/api/getNameFromMongoDB')
+    .then(response => {
+      console.log('ClassifierName API Response:', response.data);
+      if (response.data && response.data.Name) {
+        this.newName = response.data.Name;
+      } else {
+        console.error('Invalid API response for ClassifierName:', response.data);
+      }
+    })
+    .catch(error => {
+      console.error('Error fetching ClassifierName:', error);
+    });
+    
+
+    axios
+    .get('https://uaai-api.vercel.app/api/getRoleFromMongoDB')
+    .then(response => {
+      console.log('ClassifierName API Response:', response.data);
+      if (response.data && response.data.Role) {
+        this.newRole = response.data.Role;
+        this.adjustTextarea();
+      } else {
+        console.error('Invalid API response for ClassifierName:', response.data);
+      }
+    })
+    .catch(error => {
+      console.error('Error fetching ClassifierName:', error);
+    });
+
+    axios
+    .get('https://uaai-api.vercel.app/api/getIntroductionFromMongoDB')
+    .then(response => {
+      console.log('ClassifierName API Response:', response.data);
+      if (response.data && response.data.Introduction) {
+        this.newIntro = response.data.Introduction;
+        this.adjustTextarea();
+      } else {
+        console.error('Invalid API response for ClassifierName:', response.data);
+      }
+    })
+    .catch(error => {
+      console.error('Error fetching ClassifierName:', error);
+    });
+
+    axios
+    .get('https://uaai-api.vercel.app/api/getModelFromMongoDB')
+    .then(response => {
+      console.log('ClassifierName API Response:', response.data);
+      if (response.data && response.data.Model) {
+        this.newModel = response.data.Model;
+      } else {
+        console.error('Invalid API response for ClassifierName:', response.data);
+      }
+    })
+    .catch(error => {
+      console.error('Error fetching ClassifierName:', error);
+    });
+
+    axios
+    .get('https://uaai-api.vercel.app/api/getIntlimitFromMongoDB')
+    .then(response => {
+      console.log('ClassifierName API Response:', response.data);
+      if (response.data && response.data.Intlimit) {
+        this.newIntlimit = response.data.Intlimit;
+      } else {
+        console.error('Invalid API response for ClassifierName:', response.data);
+      }
+    })
+    .catch(error => {
+      console.error('Error fetching ClassifierName:', error);
+    });
+
+  },
+
+  computed: {
+    temperatureLevel() {
+      if (this.sliderValue >= 0 && this.sliderValue <= 33) {
+        return 'Low';
+      } else if (this.sliderValue >= 34 && this.sliderValue <= 66) {
+        return 'Average';
+      } else {
+        return 'High';
+      }
+    },
+  },
+
+  methods: {
+    adjustTextarea() {
+      const roleTextArea = this.$refs.roleTextarea;
+      const introTextArea = this.$refs.introTextarea;
+      roleTextArea.style.height = 'auto';
+      roleTextArea.style.height = roleTextArea.scrollHeight + 'px';
+      introTextArea.style.height = 'auto';
+      introTextArea.style.height = introTextArea.scrollHeight + 'px';
+    },
+    async updateProfile() {
+  try {
+    const updateData = {};
+
+    if (this.newName.trim() !== '') {
+      updateData.Name = this.newName;
+    }
+
+    if (this.newRole.trim() !== '') {
+      updateData.Role = this.newRole;
+    }
+
+    if (this.newIntro.trim() !== '') {
+      updateData.Introduction = this.newIntro;
+    }
+
+    if (this.newModel.trim() !== '') {
+      updateData.Model = this.newModel;
+    }
+
+    if (this.newIntlimit !== '' && !isNaN(this.newIntlimit)) {
+      updateData.Intlimit = parseInt(this.newIntlimit, 10);
+    }
+
+    if (this.Image.trim() !== '') {
+      updateData.Image = this.Image;
+    }
+
+    updateData.Temperature = this.temperatureLevel;
+
+
+    if (Object.keys(updateData).length > 0) {
+      const response = await axios.put('https://uaai-api.vercel.app/api/updateProfile', updateData);
+
+      console.log('Profile updated successfully:', response.data);
+    } else {
+      console.log('No fields to update.');
+    }
+  } catch (error) {
+    console.error('Error updating profile:', error);
+  }
+  },
+
+  },
+};
+</script>
+
 <template>
   <div class="container">
     <div class="items">
@@ -7,9 +167,9 @@
           <label for="name">Name</label><br>
           <input placeholder="AI name here" class="input-box" type="text" id="name" name="name" v-model="newName"><br><br> 
           <label for="role">Role</label><br>
-          <textarea placeholder="Enter AI Role." class="text-area" name="" id="" cols="30" rows="10" v-model="newRole"></textarea><br><br>
+          <textarea placeholder="Enter AI Role." ref="roleTextarea" @input="adjustTextarea" class="text-area" name="" id="" v-model="newRole"></textarea><br><br>
           <label for="introduction-message">Introduction Message</label><br>
-          <textarea placeholder="Enter AI introduction message." class="text-area" name="" id="" cols="30" rows="10" v-model="newIntro"></textarea><br><br>
+          <textarea placeholder="Enter AI introduction message." ref="introTextarea" @input="adjustTextarea" class="text-area" name="" id="" v-model="newIntro"></textarea><br><br>
           <label for="imageSelect">Profile image:</label> <br> 
           <select class="select-img" id="imageSelect" v-model="Image">
               <option value="stacy.png">Stacy</option>
@@ -136,152 +296,4 @@ input{
 
 </style>
 
-
-<script>
-import axios from 'axios';
-
-export default {
-  data() {
-    return {
-      newName: '', 
-      newRole: '', 
-      newIntro: '', 
-      newModel: '',
-      newIntlimit: '',
-      Image: '',
-      sliderValue: 50,
-    };
-  },
-  mounted() {
-    axios
-    .get('https://blitzkrieg-node-server.vercel.app/api/getNameFromMongoDB')
-    .then(response => {
-      console.log('ClassifierName API Response:', response.data);
-      if (response.data && response.data.Name) {
-        this.newName = response.data.Name;
-      } else {
-        console.error('Invalid API response for ClassifierName:', response.data);
-      }
-    })
-    .catch(error => {
-      console.error('Error fetching ClassifierName:', error);
-    });
-    
-
-    axios
-    .get('https://blitzkrieg-node-server.vercel.app/api/getRoleFromMongoDB')
-    .then(response => {
-      console.log('ClassifierName API Response:', response.data);
-      if (response.data && response.data.Role) {
-        this.newRole = response.data.Role;
-      } else {
-        console.error('Invalid API response for ClassifierName:', response.data);
-      }
-    })
-    .catch(error => {
-      console.error('Error fetching ClassifierName:', error);
-    });
-
-    axios
-    .get('https://blitzkrieg-node-server.vercel.app/api/getIntroductionFromMongoDB')
-    .then(response => {
-      console.log('ClassifierName API Response:', response.data);
-      if (response.data && response.data.Introduction) {
-        this.newIntro = response.data.Introduction;
-      } else {
-        console.error('Invalid API response for ClassifierName:', response.data);
-      }
-    })
-    .catch(error => {
-      console.error('Error fetching ClassifierName:', error);
-    });
-
-    axios
-    .get('https://blitzkrieg-node-server.vercel.app/api/getModelFromMongoDB')
-    .then(response => {
-      console.log('ClassifierName API Response:', response.data);
-      if (response.data && response.data.Model) {
-        this.newModel = response.data.Model;
-      } else {
-        console.error('Invalid API response for ClassifierName:', response.data);
-      }
-    })
-    .catch(error => {
-      console.error('Error fetching ClassifierName:', error);
-    });
-
-    axios
-    .get('https://blitzkrieg-node-server.vercel.app/api/getIntlimitFromMongoDB')
-    .then(response => {
-      console.log('ClassifierName API Response:', response.data);
-      if (response.data && response.data.Intlimit) {
-        this.newIntlimit = response.data.Intlimit;
-      } else {
-        console.error('Invalid API response for ClassifierName:', response.data);
-      }
-    })
-    .catch(error => {
-      console.error('Error fetching ClassifierName:', error);
-    });
-
-  },
-
-  computed: {
-    temperatureLevel() {
-      if (this.sliderValue >= 0 && this.sliderValue <= 33) {
-        return 'Low';
-      } else if (this.sliderValue >= 34 && this.sliderValue <= 66) {
-        return 'Average';
-      } else {
-        return 'High';
-      }
-    },
-  },
-
-  methods: {
-    async updateProfile() {
-  try {
-    const updateData = {};
-
-    if (this.newName.trim() !== '') {
-      updateData.Name = this.newName;
-    }
-
-    if (this.newRole.trim() !== '') {
-      updateData.Role = this.newRole;
-    }
-
-    if (this.newIntro.trim() !== '') {
-      updateData.Introduction = this.newIntro;
-    }
-
-    if (this.newModel.trim() !== '') {
-      updateData.Model = this.newModel;
-    }
-
-    if (this.newIntlimit !== '' && !isNaN(this.newIntlimit)) {
-      updateData.Intlimit = parseInt(this.newIntlimit, 10);
-    }
-
-    if (this.Image.trim() !== '') {
-      updateData.Image = this.Image;
-    }
-
-    updateData.Temperature = this.temperatureLevel;
-
-
-    if (Object.keys(updateData).length > 0) {
-      const response = await axios.put('https://blitzkrieg-node-server.vercel.app/api/updateProfile', updateData);
-
-      console.log('Profile updated successfully:', response.data);
-    } else {
-      console.log('No fields to update.');
-    }
-  } catch (error) {
-    console.error('Error updating profile:', error);
-  }
-  },
-
-  },
-};
-</script>
+ 

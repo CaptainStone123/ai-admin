@@ -4,7 +4,7 @@
     <nav class="navbar">
         <ul>
             <img src="../assets/UA-Logo.png" alt="">
-            <li><b>UA Chat Assistant</b></li>
+            <li><b>AI Virtual Assistant</b></li>
         </ul>
         <ul>
             <li><a class="primary-button" href="">Account</a></li>
@@ -14,7 +14,7 @@
 
 <style scoped>
 .navbar {
-    background-color: #042134; color: white;
+    background-color: #003075; color: white;
     position: fixed; top: 0; z-index: 100;
     height: 4.5rem; width: 100vw;
     display: flex; align-items: center; justify-content: space-between;
@@ -25,10 +25,7 @@
  }
 .navbar ul li{
     padding: 0 .6rem 0 .6rem;
-}
-.navbar ul li a:hover{
-    color: #EBC20C;
-}
+} 
 img{
     height: 3rem;
 }

@@ -1,3 +1,78 @@
+<script>
+import axios from 'axios';
+
+export default {
+  data() {
+    return {
+      Label: '',
+      Content: '',
+    };
+  },
+  mounted() {
+    axios
+      .get('https://uaai-api.vercel.app/api/getClassNameFromMongoDB/frequently_asked')
+      .then(response => {
+        console.log('ClassifierName API Response:', response.data);
+        if (response.data && response.data.name) {
+          this.Label = response.data.name;
+        } else {
+          console.error('Invalid API response for ClassifierName:', response.data);
+        }
+        this.adjustTextarea();
+      })
+      .catch(error => {
+        console.error('Error fetching ClassifierName:', error);
+      });
+  
+    axios
+      .get('https://uaai-api.vercel.app/api/getFaQFromMongoDB')
+      .then(response => {
+        if (response.data && response.data.faq) {
+          this.Content = response.data.faq;
+          this.$nextTick(() => {
+          this.adjustTextarea();
+        }); 
+        } else {
+          console.error('Invalid API response for Classifier:', response.data);
+        }
+   
+      })
+      .catch(error => {
+        console.error('Error fetching Classifier:', error);
+      });
+  },
+  methods: {
+    adjustTextarea() {
+      const textarea = this.$refs.contentTextarea;
+      textarea.style.height = 'auto';
+      textarea.style.height = textarea.scrollHeight + 'px';
+    },
+    async updateInfo() {
+  try {
+    const updateData = {};
+
+    if (this.Label.trim() !== '') {
+      updateData.name = this.Label;
+    }
+
+    if (this.Content.trim() !== '') {
+      updateData.faq = this.Content;
+    }
+
+    if (Object.keys(updateData).length > 0) {
+      const response = await axios.put('https://uaai-api.vercel.app/api/updateFaQ', updateData);
+
+      console.log('information updated successfully:', response.data);
+    } else {
+      console.log('No fields to update.');
+    }
+  } catch (error) {
+    console.error('Error updating profile:', error);
+    }
+  },
+  }
+};
+</script>
 <template>
   <div class="container">
     <div class="items">
@@ -5,9 +80,23 @@
         <h2 class="box-heading"><b>Information</b></h2>
         <div>
           <label for="name">Label</label><br>
-          <input placeholder="Information label" class="input-box" v-model="Label" type="text" id="name" name="name"><br><br>
+          <input
+            placeholder="Information label"
+            class="input-box"
+            v-model="Label"
+            ref="labelInput"
+            type="text"
+            id="name"
+            name="name"
+          ><br><br>
           <label for="role-and-personality">Enter Information here</label><br>
-          <textarea placeholder="Information content" class="text-area" v-model="Content" ref="autoTextArea" @input="autoResize" cols="30" rows="10"></textarea><br><br>
+          <textarea
+            placeholder="Information content"
+            class="text-area"
+            v-model="Content"
+            ref="contentTextarea"
+            @input="adjustTextarea"
+          ></textarea><br><br>
         </div>
       </div>
       <div class="bot">
@@ -17,9 +106,8 @@
   </div>
 </template>
 
+
 <style scoped>
-
-
 .saveBtn {
   width: 100px;
   height: 30px;
@@ -43,76 +131,7 @@ input{
   margin-bottom: 10px;
 }
 
-/* .text-area {
-  resize: none;
-  overflow-y: hidden;
-} */
-
+ 
 </style>
 
-
-<script>
-import axios from 'axios';
-
-export default {
-  data() {
-    return {
-      Label: '',
-      Content: '',
-    };
-  },
-  mounted() {
-    axios
-      .get('https://blitzkrieg-node-server.vercel.app/api/getClassNameFromMongoDB/frequently_asked')
-      .then(response => {
-        console.log('ClassifierName API Response:', response.data);
-        if (response.data && response.data.name) {
-          this.Label = response.data.name;
-        } else {
-          console.error('Invalid API response for ClassifierName:', response.data);
-        }
-      })
-      .catch(error => {
-        console.error('Error fetching ClassifierName:', error);
-      });
-  
-    axios
-      .get('https://blitzkrieg-node-server.vercel.app/api/getFaQFromMongoDB')
-      .then(response => {
-        if (response.data && response.data.faq) {
-          this.Content = response.data.faq; 
-        } else {
-          console.error('Invalid API response for Classifier:', response.data);
-        }
-      })
-      .catch(error => {
-        console.error('Error fetching Classifier:', error);
-      });
-  },
-  methods: {
-    async updateInfo() {
-  try {
-    const updateData = {};
-
-    if (this.Label.trim() !== '') {
-      updateData.name = this.Label;
-    }
-
-    if (this.Content.trim() !== '') {
-      updateData.faq = this.Content;
-    }
-
-    if (Object.keys(updateData).length > 0) {
-      const response = await axios.put('https://blitzkrieg-node-server.vercel.app/api/updateFaQ', updateData);
-
-      console.log('information updated successfully:', response.data);
-    } else {
-      console.log('No fields to update.');
-    }
-  } catch (error) {
-    console.error('Error updating profile:', error);
-    }
-  },
-  }
-};
-</script>
+ 

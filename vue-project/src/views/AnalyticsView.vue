@@ -48,17 +48,12 @@
         <table>
           <thead>
             <tr>
-                <th width="10%">No.</th>
-                <th width="20%">Session ID</th>
                 <th width="20%">Duration</th>
                 <th width="50%">Details</th>
-                <!-- <th width="0%" > </th> -->
-             </tr>
+              </tr>
           </thead>
           <tbody>
-            <tr v-for="(session, index) in filteredSessions" :key="session.customId">
-              <td>{{ index + 1 }}</td>
-              <td>{{ session.customId }}</td>
+            <tr v-for="(session ) in filteredSessions" :key="session.customId">
               <td>{{ session.duration }}</td>
               <td>
                 <ul>
@@ -67,8 +62,7 @@
                   </li>
                 </ul>
               </td>
-              <!-- <td class="details-btn-td"><button class="details-tbn">view</button></td> -->
-            </tr>
+             </tr>
           </tbody>
         </table>
       </div>
@@ -95,7 +89,7 @@ export default {
     };
   },
   created() {
-    axios.get('https://blitzkrieg-node-server.vercel.app/api/getAllSessions')
+    axios.get('https://uaai-api.vercel.app/api/getAllSessions')
     .then(response => {
         this.sessions = response.data;
         this.calculateDurationCount();
@@ -104,7 +98,7 @@ export default {
         console.error('Error fetching sessions:', error);
       });
     
-    axios.get('https://blitzkrieg-node-server.vercel.app/api/getKeywords')
+    axios.get('https://uaai-api.vercel.app/api/getKeywords')
     .then(response => {
       this.topKeywords = response.data.sort((a, b) => b.count - a.count);
       })
@@ -114,7 +108,7 @@ export default {
   },
   mounted() {
     axios
-      .get('https://blitzkrieg-node-server.vercel.app/api/SessionCount')
+      .get('https://uaai-api.vercel.app/api/SessionCount')
       .then(response => {
         console.log('SessionCount API Response:', response.data);
         if (response.data && response.data.count) {

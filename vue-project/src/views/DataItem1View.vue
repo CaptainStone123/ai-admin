@@ -10,8 +10,9 @@ export default {
     };
   },
   mounted() {
+    this.adjustTextarea(),
     axios
-      .get('https://blitzkrieg-node-server.vercel.app/api/getClassifierNameFromMongoDB')
+      .get('https://uaai-api.vercel.app/api/getClassifierNameFromMongoDB')
       .then(response => {
         console.log('ClassifierName API Response:', response.data);
         if (response.data && response.data.name) {
@@ -25,7 +26,7 @@ export default {
       });
   
     axios
-      .get('https://blitzkrieg-node-server.vercel.app/api/getClassifierFromMongoDB')
+      .get('https://uaai-api.vercel.app/api/getClassifierFromMongoDB')
       .then(response => {
         if (response.data && response.data.classifier) {
           this.Content = response.data.classifier; 
@@ -38,6 +39,11 @@ export default {
       });
   },
   methods: {
+    adjustTextarea() {
+      const textarea = this.$refs.textarea;
+      textarea.style.height = 'auto';
+      textarea.style.height = textarea.scrollHeight + 'px';
+    },
     async updateInfo() {
   try {
     const updateData = {};
@@ -51,7 +57,7 @@ export default {
     }
 
     if (Object.keys(updateData).length > 0) {
-      const response = await axios.put('https://blitzkrieg-node-server.vercel.app/api/updateClassifier', updateData);
+      const response = await axios.put('https://uaai-api.vercel.app/api/updateClassifier', updateData);
 
       console.log('information updated successfully:', response.data);
     } else {
@@ -72,9 +78,9 @@ export default {
         <h2 class="box-heading"><b>Information</b></h2>
         <div>
           <label for="name">Label</label><br>
-          <input placeholder="Information label" class="input-box" v-model="Label" type="text" id="name" name="name"><br><br>
+          <input placeholder="Information label" class="input-box" v-model="Label" ref="textarea" @input="adjustTextarea" type="text" id="name" name="name"><br><br>
           <label for="role-and-personality">Enter Information here</label><br>
-          <textarea placeholder="Information content" class="text-area" v-model="Content" ref="autoTextArea" @input="autoResize" cols="30" rows="10"></textarea><br><br>
+          <textarea placeholder="Information content" class="text-area" v-model="Content" ref="textarea" @input="adjustTextarea"  cols="30" rows="10"></textarea><br><br>
         </div>
       </div>
       <div class="bot">
