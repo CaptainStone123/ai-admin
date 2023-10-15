@@ -6,25 +6,20 @@ html, body {
 	list-style: none;
 	text-decoration: none;
 	color: inherit; 
+	background-color: #EEF5F9;
+	font-family: 'Open Sans', Arial, Helvetica, sans-serif;
 }
    
 
-/* GENERAL CSS */
-body {
-  background-color: #EEF5F9;
-  font-family: 'Open Sans', Arial, Helvetica, sans-serif;
-}
- 
 .container {
 	position: absolute;
 	right: 0;
 	display: flex;
 	justify-content: end;
  	align-items: center;
-	width: 100%;
+	width: 82%;
 	padding: 4rem 4rem 4rem 4rem;
-	background-color: rebeccapurple;
- }
+  }
   
 .content{
 	width: 100%;
