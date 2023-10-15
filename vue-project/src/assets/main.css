@@ -19,7 +19,7 @@ html, body {
 	justify-content: end;
  	align-items: center;
  	padding: 4rem 4rem 4rem 4rem;
-	width: calc(100% - 18rem);
+	width: calc(100vw - 275px);
  }
   
 .content{

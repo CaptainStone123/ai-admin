@@ -49,7 +49,7 @@
     background-color: white;
     box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.3);
     height: calc(100vh - 4rem);
-    width: 18rem;
+    width: 275px;
     transition: top 0.3s;
     padding:2rem;
     color: rgb(70, 70, 70);
