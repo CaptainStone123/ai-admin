@@ -160,7 +160,7 @@ export default {
 
 <template>
   <div class="container">
-    <div class="items">
+    <div class="content">
       <div class="box">
         <h2 class="box-heading"><b>AI Profile</b></h2>
         <div>
@@ -247,11 +247,7 @@ export default {
   display: flex;
   justify-content: right;
 }
-
-.items{
-  display: flex;
-  flex-direction: column;
-}
+ 
  
 
 

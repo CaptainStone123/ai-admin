@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <div class="items">
+    <div class="content">
       <section class="box">
         <span>
           <label for="datepicker"><b>Select Date </b></label>
@@ -249,7 +249,7 @@ hr{
   justify-content: space-between;
   margin: 4rem 0 0 0;
   height: 15rem;
-  width: calc(100vw - 27rem);
+  width: 100%;
 }
 
 .user-engagement{
