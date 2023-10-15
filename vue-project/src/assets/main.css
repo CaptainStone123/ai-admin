@@ -17,8 +17,9 @@ html, body {
 	display: flex;
 	justify-content: end;
  	align-items: center;
-	width: 82%;
-	padding: 4rem 4rem 4rem 4rem;
+ 	padding: 4rem 4rem 4rem 4rem;
+	background-color: rgb(208, 157, 157);
+	width: 1250px;
   }
   
 .content{
