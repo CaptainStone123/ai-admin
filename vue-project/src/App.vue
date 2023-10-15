@@ -6,11 +6,13 @@ import Navbar from './components/Navbar.vue'
 </script>
 
 <template>
-  <section>
-      <Sidebar/> 
-      <Navbar/>
-      <RouterView />
-  </section>
+  <section >
+      <!-- <Sidebar/> 
+      <Navbar/> -->
+      <div>
+        <RouterView />
+      </div>
+   </section>
 </template>
 
 <style scoped>
