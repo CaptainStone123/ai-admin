@@ -13,20 +13,16 @@ html, body {
    
 
 .container {
-	position: absolute;
-	right: 0;
-	display: flex;
+  	display: flex;
 	justify-content: center;
  	align-items: center;
  	padding: 4rem 0rem 4rem 0rem;
-	width: calc(100% - 275px);
-	/* background-color: #334B5B; */
- }
-  
+	width: calc(100vw - 18rem);
+ 	margin-left: 18rem;
+}
 .content{
 	width: 75%;
 }
-
 .box {
 	background-color: white;
 	border-radius: 5px;
