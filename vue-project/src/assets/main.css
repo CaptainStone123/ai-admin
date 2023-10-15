@@ -13,13 +13,22 @@ html, body {
    
 
 .container {
-  	display: flex;
+	position: fixed;
+	top: 0;
+	left: 18rem; /* Adjust this value to match your desired left offset */
+	width: calc(100vw - 18rem); /* Adjust this value based on your desired width */
+	height: 100vh;
+	overflow-y: auto; /* Enable vertical scrolling if content exceeds viewport height */
+	display: flex;
 	justify-content: center;
- 	align-items: center;
- 	padding: 4rem 0rem 4rem 0rem;
-	width: calc(100vw - 18rem);
- 	margin-left: 18rem;
-}
+	align-items: center;
+	padding: 4rem 0;
+ 	color: rgb(70, 70, 70);
+	font-size: 1rem;
+  }
+  
+
+
 .content{
 	width: 75%;
 }
