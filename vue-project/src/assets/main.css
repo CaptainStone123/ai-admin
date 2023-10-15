@@ -1,13 +1,14 @@
 html, body {
 	margin: 0;
 	padding: 0;
-	width: 100vw;
+	width: 100%;
  	height: 100%;
 	list-style: none;
 	text-decoration: none;
 	color: inherit; 
 	overflow-x: hidden;
 	font-family: 'Open Sans', Arial, Helvetica, sans-serif;
+	background-color: #eef5f9;
 }
    
 
@@ -18,7 +19,7 @@ html, body {
 	justify-content: center;
  	align-items: center;
  	padding: 4rem 0rem 4rem 0rem;
-	width: calc(100vw - 275px);
+	width: calc(100% - 275px);
 	/* background-color: #334B5B; */
  }
   
