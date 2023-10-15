@@ -7,19 +7,9 @@ import Navbar from './components/Navbar.vue'
 
 <template>
   <section>
-    <header>
-      <nav>
-        <Sidebar/> 
-        <Navbar/> 
-        <RouterLink to="/">Home</RouterLink>
-        <RouterLink to="/about">About</RouterLink>
-      </nav>
-    </header>
-    <body>
+      <Sidebar/> 
+      <Navbar/>
       <RouterView />
-    </body>
-
-   
   </section>
 </template>
 
