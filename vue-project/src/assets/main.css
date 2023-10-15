@@ -1,7 +1,7 @@
 html, body {
 	margin: 0;
 	padding: 0;
-	width: 100%;
+	width: 100vw;
  	height: 100%;
 	list-style: none;
 	text-decoration: none;
@@ -19,7 +19,7 @@ html, body {
  	align-items: center;
  	padding: 4rem 4rem 4rem 4rem;
 	background-color: rgb(208, 157, 157);
-	width: 1250px;
+	width: 90%;
   }
   
 .content{
