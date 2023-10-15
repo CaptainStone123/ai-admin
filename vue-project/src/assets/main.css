@@ -16,14 +16,15 @@ body {
 }
 
 .container {
-	width: calc(100% - 275px);
-	padding:4rem;
 	position: absolute;
 	right: 0;
 	display: flex;
 	justify-content: center;
  	align-items: center;
-	background-color: #364D5D;
+	width: 82%;
+	padding: 4rem 4rem 4rem 4rem;
+	margin-left: 275px;
+	background-color: #045792;
 }
   
 .content{
