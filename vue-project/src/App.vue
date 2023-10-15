@@ -7,9 +7,10 @@ import Navbar from './components/Navbar.vue'
 
 <template>
   <section >
-      <Sidebar/> 
       <Navbar/>
-  
+
+      <!-- <Sidebar/>  -->
+   
       <RouterView />
       
    </section>
