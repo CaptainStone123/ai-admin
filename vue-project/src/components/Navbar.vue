@@ -1,5 +1,3 @@
-<script  >
-</script>
 <template>
     <nav class="navbar">
         <ul>
@@ -7,7 +5,7 @@
             <li><b>AI Virtual Assistant</b></li>
         </ul>
         <ul>
-            <li><a class="primary-button" href="">Account</a></li>
+            <li><router-link to="/account" class="primary-button">Account</router-link></li>
         </ul>
      </nav> 
 </template>

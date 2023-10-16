@@ -1,8 +1,13 @@
-
 <script>
+import Sidebar from '../components/Sidebar.vue'
+import Navbar from '../components/Navbar.vue'
 import axios from 'axios';
 
 export default {
+  components: {
+    Sidebar,
+    Navbar,
+  },
   data() {
     return {
       Label: '',
@@ -10,7 +15,6 @@ export default {
     };
   },
   mounted() {
-    this.adjustTextarea(),
     axios
       .get('https://uaai-api.vercel.app/api/getClassifierNameFromMongoDB')
       .then(response => {
@@ -39,11 +43,6 @@ export default {
       });
   },
   methods: {
-    adjustTextarea() {
-      const textarea = this.$refs.textarea;
-      textarea.style.height = 'auto';
-      textarea.style.height = textarea.scrollHeight + 'px';
-    },
     async updateInfo() {
   try {
     const updateData = {};
@@ -72,15 +71,18 @@ export default {
 </script>
 
 <template>
+<div class="navside">
+  <Navbar/>
+  <Sidebar/>
   <div class="container">
     <div class="items">
       <div class="box">
         <h2 class="box-heading"><b>Information</b></h2>
         <div>
           <label for="name">Label</label><br>
-          <input placeholder="Information label" class="input-box" v-model="Label" ref="textarea" @input="adjustTextarea" type="text" id="name" name="name"><br><br>
+          <input placeholder="Information label" class="input-box" v-model="Label" type="text" id="name" name="name"><br><br>
           <label for="role-and-personality">Enter Information here</label><br>
-          <textarea placeholder="Information content" class="text-area" v-model="Content" ref="textarea" @input="adjustTextarea"  cols="30" rows="10"></textarea><br><br>
+          <textarea placeholder="Information content" class="text-area" v-model="Content" ref="autoTextArea" @input="autoResize" cols="30" rows="10"></textarea><br><br>
         </div>
       </div>
       <div class="bot">
@@ -88,6 +90,7 @@ export default {
       </div>
     </div>
   </div>
+</div>
 </template>
 
 <style scoped>

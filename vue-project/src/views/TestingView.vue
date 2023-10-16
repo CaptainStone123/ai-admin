@@ -1,6 +1,13 @@
 <script>
+import Sidebar from '../components/Sidebar.vue'
+import Navbar from '../components/Navbar.vue'
+import axios from 'axios';
 
 export default {
+  components: {
+    Sidebar,
+    Navbar,
+  },
   data() {
     return {
       input: '',
@@ -28,7 +35,7 @@ export default {
         }
       };
       try {
-        const response = await fetch('https://uaai-api.vercel.app/completions', options);
+        const response = await fetch('http://uaai-api.vercel.app/completions', options);
         const data = await response.json();
         const conMessage = data.choices[0].message;
 
@@ -57,6 +64,9 @@ export default {
 </script>
 
 <template>
+<div class="navside">
+  <Navbar/>
+  <Sidebar/>
   <div class="container">
     <div class="chatcontainer w-[80vw]  flex justify-center">
       <div class="flex flex-col w-[80%] ">
@@ -97,6 +107,7 @@ export default {
     </div>
 
   </div>
+</div>
 </template>
 
 <style >

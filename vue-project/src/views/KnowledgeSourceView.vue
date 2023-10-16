@@ -1,8 +1,13 @@
-
 <script>
+import Sidebar from '../components/Sidebar.vue'
+import Navbar from '../components/Navbar.vue'
 import axios from 'axios';
 
-  export default {
+export default {
+  components: {
+    Sidebar,
+    Navbar,
+  },
     data() {
       return {
         classify: '',
@@ -83,6 +88,9 @@ import axios from 'axios';
 </script>
 
 <template>
+<div class="navside">
+  <Navbar/>
+  <Sidebar/>
   <div class="container">
 
     <div class="content">
@@ -163,6 +171,7 @@ import axios from 'axios';
   </div>
 
   </div>
+</div>
 </template>
 
 <style scoped>
