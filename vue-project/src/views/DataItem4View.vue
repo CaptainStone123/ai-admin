@@ -10,7 +10,8 @@
             <label for="name">Label</label><br>
             <input placeholder="Information label" class="input-box" v-model="Label" type="text" id="name" name="name"><br><br>
             <label for="role-and-personality">Enter Information here</label><br>
-            <textarea placeholder="Information content" class="text-area" v-model="Content" ref="autoTextArea" @input="autoResize" cols="30" rows="10"></textarea><br><br>
+            <textarea placeholder="Information content" class="text-area" v-model="Content"  ref="contentTextarea"
+            @input="adjustTextarea"></textarea><br><br>
           </div>
         </div>
         <div class="bot">
@@ -91,6 +92,9 @@
         .then(response => {
           if (response.data && response.data.admissionInfo) {
             this.Content = response.data.admissionInfo; 
+            this.$nextTick(() => {
+              this.adjustTextarea();
+            });
           } else {
             console.error('Invalid API response for Classifier:', response.data);
           }
@@ -100,6 +104,11 @@
         });
     },
     methods: {
+      adjustTextarea() {
+      const textarea = this.$refs.contentTextarea;
+      textarea.style.height = 'auto';
+      textarea.style.height = textarea.scrollHeight + 'px';
+    },
       async updateInfo() {
     try {
       const updateData = {};

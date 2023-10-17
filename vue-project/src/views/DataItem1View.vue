@@ -21,6 +21,9 @@ export default {
         console.log('ClassifierName API Response:', response.data);
         if (response.data && response.data.name) {
           this.Label = response.data.name;
+          this.$nextTick(() => {
+          this.adjustTextarea();
+        });
         } else {
           console.error('Invalid API response for ClassifierName:', response.data);
         }
@@ -43,6 +46,11 @@ export default {
       });
   },
   methods: {
+    adjustTextarea() {
+      const textarea = this.$refs.contentTextarea;
+      textarea.style.height = 'auto';
+      textarea.style.height = textarea.scrollHeight + 'px';
+    },
     async updateInfo() {
   try {
     const updateData = {};
@@ -82,7 +90,8 @@ export default {
           <label for="name">Label</label><br>
           <input placeholder="Information label" class="input-box" v-model="Label" type="text" id="name" name="name"><br><br>
           <label for="role-and-personality">Enter Information here</label><br>
-          <textarea placeholder="Information content" class="text-area" v-model="Content" ref="autoTextArea" @input="autoResize" cols="30" rows="10"></textarea><br><br>
+          <textarea placeholder="Information content" class="text-area" v-model="Content" ref="contentTextarea"
+            @input="adjustTextarea" cols="30" rows="10"></textarea><br><br>
         </div>
       </div>
       <div class="bot">

@@ -10,9 +10,11 @@
             <label for="name">Name</label><br>
             <input placeholder="AI name here" class="input-box" type="text" id="name" name="name" v-model="newName"><br><br> 
             <label for="role">Role</label><br>
-            <textarea placeholder="Enter AI Role." class="text-area" name="" id="" cols="30" rows="10" v-model="newRole"></textarea><br><br>
+            <textarea placeholder="Enter AI Role." class="text-area" name="" id="" ref="roleTextarea"
+            @input="adjustTextarea" v-model="newRole"></textarea><br><br>
             <label for="introduction-message">Introduction Message</label><br>
-            <textarea placeholder="Enter AI introduction message." class="text-area" name="" id="" cols="30" rows="10" v-model="newIntro"></textarea><br><br>
+            <textarea placeholder="Enter AI introduction message." class="text-area" name="" id="" ref="introTextarea"
+            @input="adjustTextarea" v-model="newIntro"></textarea><br><br>
             <label for="imageSelect">Profile image:</label> <br> 
             <select class="select-img" id="imageSelect" v-model="Image">
                 <option value="stacy.png">Stacy</option>
@@ -184,6 +186,9 @@
         console.log('ClassifierName API Response:', response.data);
         if (response.data && response.data.Role) {
           this.newRole = response.data.Role;
+          this.$nextTick(() => {
+            this.adjustTextarea();
+          });
         } else {
           console.error('Invalid API response for ClassifierName:', response.data);
         }
@@ -198,6 +203,9 @@
         console.log('ClassifierName API Response:', response.data);
         if (response.data && response.data.Introduction) {
           this.newIntro = response.data.Introduction;
+          this.$nextTick(() => {
+            this.adjustTextarea();
+          });
         } else {
           console.error('Invalid API response for ClassifierName:', response.data);
         }
@@ -249,6 +257,14 @@
     },
   
     methods: {
+      adjustTextarea() {
+      const textareaRole = this.$refs.roleTextarea;
+      textareaRole.style.height = 'auto';
+      textareaRole.style.height = textareaRole.scrollHeight + 'px';
+      const textareaIntro = this.$refs.introTextarea;
+      textareaIntro.style.height = 'auto';
+      textareaIntro.style.height = textareaIntro.scrollHeight + 'px';
+    },
       async updateProfile() {
     try {
       const updateData = {};
