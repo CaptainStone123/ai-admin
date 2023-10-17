@@ -10,7 +10,7 @@
       { "source": "/knowledge-source/data-item-4", "destination": "/knowledge-source/data-item-4" },
       { "source": "/knowledge-source/data-item-5", "destination": "/knowledge-source/data-item-5" },
    
-      { "source": "/(.*)", "destination": "/index.html" }
+      { "source": "/", "destination": "/" }
     ]
   }
   
