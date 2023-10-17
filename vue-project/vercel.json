@@ -1,7 +1,7 @@
 {
     "rewrites": [
-      { "source": "/analytics", "destination": "/analytics" },
-      { "source": "/testing", "destination": "/testing" },
+      { "source": "/(.*)", "destination": "/analytics" },
+      { "source": "/(.*)", "destination": "/testing" },
       { "source": "/chatbot-settings", "destination": "/chatbot-settings" },
       { "source": "/knowledge-source/", "destination": "/knowledge-source/" },
       { "source": "/knowledge-source/data-item-1", "destination": "/knowledge-source/data-item-1" },
