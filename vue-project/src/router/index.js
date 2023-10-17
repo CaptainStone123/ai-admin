@@ -24,7 +24,7 @@ const router = createRouter({
       path: '/analytics',
       name: 'analytics',
       component: AnalyticsView,
-      meta: { requiresAuth: true },
+      meta: { requiresAuth: false},
     },
     {
       path: '/testing',
