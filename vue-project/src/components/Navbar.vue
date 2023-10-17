@@ -5,14 +5,14 @@
             <li><b>AI Virtual Assistant</b></li>
         </ul>
         <ul>
-            <li><router-link to="/account" class="primary-button">Account</router-link></li>
+            <li><router-link to="/account" class="primary-button"><b>Account</b></router-link></li>
         </ul>
      </nav> 
 </template>
 
 <style scoped>
 .navbar {
-    background-color: #003075; color: white;
+    background-color: #002366; color: white;
     position: fixed; top: 0; z-index: 100;
     height: 4.5rem; width: 100vw;
     display: flex; align-items: center; justify-content: space-between;
@@ -27,6 +27,7 @@
 img{
     height: 3rem;
 }
+
 </style>
 
  

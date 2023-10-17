@@ -167,8 +167,10 @@ button {
   width:100%;
   height: 40px;
   border-radius: 5px;
-  background-color: white;
-  border: 1px solid #364D5D;
+ 
+  background-color: #002366; 
+  color: white;
+
   cursor: pointer;
   margin: .5rem 0 .5rem 0;
 }
