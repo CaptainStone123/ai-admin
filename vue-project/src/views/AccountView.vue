@@ -182,10 +182,6 @@ export default {
   justify-content: right;
 }
 
-.emailcon {
-  /* margin-bottom: 50px; */
-}
-
 .items {
   margin-right: 5%;
   width: 550px;

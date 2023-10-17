@@ -205,18 +205,20 @@ export default {
           <h2 class="box-heading"><b>Top Keywords</b></h2>
           <div class="keyword-columns">
             <div class="keyword-column">
-              <span class="keyword-item" v-for="(keyword, index) in topKeywords.slice(0, 5)" :key="keyword._id">
+              <!-- put index in v-for keyword if it will be uncommented -->
+              <span class="keyword-item" v-for="(keyword) in topKeywords.slice(0, 5)" :key="keyword._id">
                 <ul>
-                  <li>{{ index + 1 }}.</li>
+                  <!-- <li>{{ index + 1 }}.</li> -->
                   <li>{{ keyword.count }}</li>
                   <li>{{ keyword._id }}</li>
                 </ul>
               </span>
             </div>
             <div class="keyword-column">
-              <span class="keyword-item" v-for="(keyword, index) in topKeywords.slice(5, 10)" :key="keyword._id">
+              <!-- put index in v-for keyword if it will be uncommented -->
+              <span class="keyword-item" v-for="(keyword) in topKeywords.slice(5, 10)" :key="keyword._id">
                 <ul>
-                  <li>{{ index + 6 }}.</li>
+                  <!-- <li>{{ index + 6 }}.</li> -->
                   <li>{{ keyword.count }}</li>
                   <li>{{ keyword._id }}</li>
                 </ul>
