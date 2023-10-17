@@ -19,8 +19,31 @@ export default {
       conv:[]
     };
   },
- 
+  mounted() {
+    axios.get('https://uaai-api.vercel.app/api/getImageFromMongoDB')
+        .then(response => {
+            const imageName = response.data.Image || 'stacy.png'; 
+            const imageSrc = `/${imageName}`;
+
+            console.log(imageSrc);
+            
+            this.loadImage(imageSrc);
+        })
+        .catch(error => {
+            console.error('Error fetching image:', error);
+        });
+  },
   methods: {
+    loadImage(src) {
+            const img = new Image();
+            img.onload = () => {
+                this.$refs.profileImage.src = src;
+            };
+            img.onerror = () => {
+                console.error('Error loading image:', src);
+            };
+            img.src = src;
+        },
     
      async fetchData() {
       this.isLoading = true;
@@ -35,7 +58,7 @@ export default {
         }
       };
       try {
-        const response = await fetch('http://uaai-api.vercel.app/completions', options);
+        const response = await fetch('http://localhost:5000/completions', options);
         const data = await response.json();
         const conMessage = data.choices[0].message;
 
@@ -77,13 +100,20 @@ export default {
 
             <div v-for="(message, index) in conv" :key="index" class="message-container">
               <div :class="[message.role === 'user' ? 'flex user-message user-container justify-end text-right' : 'flex bot-message justify-start text-left']">
-                <span class="role"> <img class="h-[2.5rem]" src="../assets/profile.png" alt=""></span>
+                <span class="role"> 
+                  <!-- <img class="h-[2.5rem]" src="../assets/profile.png" alt=""> -->
+                  <img class="profile-img h-[2.5rem]" ref="profileImage" alt="">
+
+                </span>
                 <span class="message text-[15px] mx-[10px]" v-html="message.content"></span>
               </div>
             </div>
 
             <div v-if="isLoading" class="loading-message text-black flex">
-              <span class="role"> <img class="h-[2.5rem]" src="../assets/profile.png" alt=""></span>
+              <span class="role"> 
+                <!-- <img class="h-[2.5rem]" src="../assets/profile.png" alt=""> -->
+                <img class="profile-img h-[2.5rem]" ref="profileImage" alt="">
+              </span>
               <div class="loading-box">
                 <span class="dot"></span>
                 <span class="dot"></span>

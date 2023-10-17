@@ -90,7 +90,6 @@ export default {
   
 <style scoped>
 .login-background {
-  background-color: #2e9aed; 
   height: 100vh;
   display: flex;
 }
@@ -104,7 +103,7 @@ export default {
 .login-img{
   width: 100%;
   height: 100%;
-  background: url('../assets/1.png') no-repeat center center;
+  background: url('../assets/12.png') no-repeat center center;
   background-size: cover;
 }
 .login-container {

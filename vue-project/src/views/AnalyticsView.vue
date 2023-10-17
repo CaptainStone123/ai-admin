@@ -1,3 +1,172 @@
+
+<script>
+import Sidebar from '../components/Sidebar.vue'
+import Navbar from '../components/Navbar.vue'
+import axios from 'axios';
+
+export default {
+  components: {
+    Sidebar,
+    Navbar,
+  },
+  components: {
+    Sidebar,
+    Navbar,
+  },
+  data() {
+    return {
+      sessions: [],
+      SessionCount: '',
+      DurationCount: '',
+      AverageDuration: '',
+      selectedDate: null,
+      topKeywords: [],
+      topTen: 10,
+    };
+  },
+  created() {
+    axios.get('https://uaai-api.vercel.app/api/getAllSessions')
+    .then(response => {
+        this.sessions = response.data;
+        this.calculateDurationCount();
+      })
+      .catch(error => {
+        console.error('Error fetching sessions:', error);
+      });
+    
+    axios.get('https://uaai-api.vercel.app/api/getKeywords')
+    .then(response => {
+      this.topKeywords = response.data.sort((a, b) => b.count - a.count);
+      })
+      .catch(error => {
+        console.error('Error fetching sessions:', error);
+      });
+  },
+  mounted() {
+    axios
+      .get('https://uaai-api.vercel.app/api/SessionCount')
+      .then(response => {
+        console.log('SessionCount API Response:', response.data);
+        if (response.data && response.data.count) {
+          this.SessionCount = response.data.count;
+          this.calculateAverageDuration();
+        } else {
+          console.error('Invalid API response for SessionCount:', response.data);
+        }
+      })
+      .catch(error => {
+        console.error('Error fetching SessionCount:', error);
+      });
+  },
+  computed: {
+    filteredSessions() {
+    if (!this.selectedDate) {
+      return this.sessions;
+    }
+
+    const selectedDate = new Date(this.selectedDate);
+    const selectedYear = selectedDate.getFullYear();
+    const selectedMonth = selectedDate.getMonth() + 1;
+    const selectedDay = selectedDate.getDate();
+
+    return this.sessions.filter((session) => {
+      const sessionDate = new Date(session.date);
+      const sessionYear = sessionDate.getFullYear();
+      const sessionMonth = sessionDate.getMonth() + 1;
+      const sessionDay = sessionDate.getDate();
+
+      return (
+        selectedYear === sessionYear &&
+        selectedMonth === sessionMonth &&
+        selectedDay === sessionDay
+      );
+    });
+    },
+
+    sortedDetails() {
+      return this.filteredSessions.map((session) => {
+        const sortedDetails = [...session.details];
+        sortedDetails.sort((a, b) => a.content.length - b.content.length);
+        return sortedDetails;
+      });
+    },
+  },
+  methods: {
+  calculateDurationCount() {
+    let count = 0;
+    for (const session of this.sessions) {
+      if (session.details && Array.isArray(session.details)) {
+        count += session.details.length;
+      }
+    }
+    this.DurationCount = count;
+  },
+
+  calculateAverageDuration() {
+    let totalDuration = 0;
+    for (const session of this.sessions) {
+      totalDuration += session.duration;
+    }
+    const averageDuration = totalDuration / this.sessions.length;
+    this.AverageDuration = isNaN(averageDuration) ? 'N/A' : averageDuration.toFixed(2);
+  },
+
+  filterSessionsByDate() {
+    if (!this.selectedDate) {
+      return this.sessions;
+    }
+
+    const selectedDate = new Date(this.selectedDate);
+    const selectedYear = selectedDate.getFullYear();
+    const selectedMonth = selectedDate.getMonth() + 1;
+    const selectedDay = selectedDate.getDate();
+
+    
+    return this.sessions.filter((session) => {
+      const sessionDate = new Date(session.date);
+      const sessionYear = sessionDate.getFullYear();
+      const sessionMonth = sessionDate.getMonth() + 1;
+      const sessionDay = sessionDate.getDate();
+
+      return (
+        selectedYear === sessionYear &&
+        selectedMonth === sessionMonth &&
+        selectedDay === sessionDay
+      );
+    });
+  },
+
+  recalculateUserEngagement() {
+  
+    const filteredSessions = this.filterSessionsByDate();
+
+    let count = 0;
+    for (const session of filteredSessions) {
+      if (session.details && Array.isArray(session.details)) {
+        count += session.details.length;
+      }
+    }
+    this.DurationCount = count;
+
+    this.SessionCount = filteredSessions.length;
+
+    let totalDuration = 0;
+    for (const session of filteredSessions) {
+      totalDuration += session.duration;
+    }
+    const averageDuration = totalDuration / filteredSessions.length;
+    this.AverageDuration = isNaN(averageDuration) ? 'N/A' : averageDuration.toFixed(2);
+  },
+
+  },
+  watch: {
+    selectedDate: 'recalculateUserEngagement',
+  }
+}
+</script>
+
+
+
 <template>
   <div class="navside">
     <Sidebar/>
@@ -63,16 +232,16 @@
           <table>
             <thead>
               <tr>
-                  <th width="10%">No.</th>
+                  <!-- <th width="10%">No.</th> -->
                   <!-- <th width="20%">Session ID</th> -->
                   <th width="20%">Duration</th>
-                  <th width="70%">Details</th>
+                  <th width="80%">Details</th>
                   <!-- <th width="20%" > </th> -->
                </tr>
             </thead>
             <tbody>
               <tr v-for="(session, index) in filteredSessions" :key="session.customId">
-                <td>{{ index + 1 }}</td>
+                <!-- <td>{{ index + 1 }}</td> -->
                 <!-- <td>{{ session.customId }}</td> -->
                 <td>{{ session.duration }}</td>
                 <td>
@@ -99,175 +268,7 @@
     </div>
   </div>
   </template>
-  
-  <script>
-  import Sidebar from '../components/Sidebar.vue'
-  import Navbar from '../components/Navbar.vue'
-  import axios from 'axios';
-  
-  export default {
-    components: {
-      Sidebar,
-      Navbar,
-    },
-    components: {
-      Sidebar,
-      Navbar,
-    },
-    data() {
-      return {
-        sessions: [],
-        SessionCount: '',
-        DurationCount: '',
-        AverageDuration: '',
-        selectedDate: null,
-        topKeywords: [],
-        topTen: 10,
-      };
-    },
-    created() {
-      axios.get('https://uaai-api.vercel.app/api/getAllSessions')
-      .then(response => {
-          this.sessions = response.data;
-          this.calculateDurationCount();
-        })
-        .catch(error => {
-          console.error('Error fetching sessions:', error);
-        });
-      
-      axios.get('https://uaai-api.vercel.app/api/getKeywords')
-      .then(response => {
-        this.topKeywords = response.data.sort((a, b) => b.count - a.count);
-        })
-        .catch(error => {
-          console.error('Error fetching sessions:', error);
-        });
-    },
-    mounted() {
-      axios
-        .get('https://uaai-api.vercel.app/api/SessionCount')
-        .then(response => {
-          console.log('SessionCount API Response:', response.data);
-          if (response.data && response.data.count) {
-            this.SessionCount = response.data.count;
-            this.calculateAverageDuration();
-          } else {
-            console.error('Invalid API response for SessionCount:', response.data);
-          }
-        })
-        .catch(error => {
-          console.error('Error fetching SessionCount:', error);
-        });
-    },
-    computed: {
-      filteredSessions() {
-      if (!this.selectedDate) {
-        return this.sessions;
-      }
-  
-      const selectedDate = new Date(this.selectedDate);
-      const selectedYear = selectedDate.getFullYear();
-      const selectedMonth = selectedDate.getMonth() + 1;
-      const selectedDay = selectedDate.getDate();
-  
-      return this.sessions.filter((session) => {
-        const sessionDate = new Date(session.date);
-        const sessionYear = sessionDate.getFullYear();
-        const sessionMonth = sessionDate.getMonth() + 1;
-        const sessionDay = sessionDate.getDate();
-  
-        return (
-          selectedYear === sessionYear &&
-          selectedMonth === sessionMonth &&
-          selectedDay === sessionDay
-        );
-      });
-      },
-
-      sortedDetails() {
-        return this.filteredSessions.map((session) => {
-          const sortedDetails = [...session.details];
-          sortedDetails.sort((a, b) => a.content.length - b.content.length);
-          return sortedDetails;
-        });
-      },
-    },
-    methods: {
-    calculateDurationCount() {
-      let count = 0;
-      for (const session of this.sessions) {
-        if (session.details && Array.isArray(session.details)) {
-          count += session.details.length;
-        }
-      }
-      this.DurationCount = count;
-    },
-  
-    calculateAverageDuration() {
-      let totalDuration = 0;
-      for (const session of this.sessions) {
-        totalDuration += session.duration;
-      }
-      const averageDuration = totalDuration / this.sessions.length;
-      this.AverageDuration = isNaN(averageDuration) ? 'N/A' : averageDuration.toFixed(2);
-    },
-  
-    filterSessionsByDate() {
-      if (!this.selectedDate) {
-        return this.sessions;
-      }
-  
-      const selectedDate = new Date(this.selectedDate);
-      const selectedYear = selectedDate.getFullYear();
-      const selectedMonth = selectedDate.getMonth() + 1;
-      const selectedDay = selectedDate.getDate();
-  
-      
-      return this.sessions.filter((session) => {
-        const sessionDate = new Date(session.date);
-        const sessionYear = sessionDate.getFullYear();
-        const sessionMonth = sessionDate.getMonth() + 1;
-        const sessionDay = sessionDate.getDate();
-  
-        return (
-          selectedYear === sessionYear &&
-          selectedMonth === sessionMonth &&
-          selectedDay === sessionDay
-        );
-      });
-    },
-  
-    recalculateUserEngagement() {
-    
-      const filteredSessions = this.filterSessionsByDate();
-  
-      let count = 0;
-      for (const session of filteredSessions) {
-        if (session.details && Array.isArray(session.details)) {
-          count += session.details.length;
-        }
-      }
-      this.DurationCount = count;
-  
-      this.SessionCount = filteredSessions.length;
-  
-      let totalDuration = 0;
-      for (const session of filteredSessions) {
-        totalDuration += session.duration;
-      }
-      const averageDuration = totalDuration / filteredSessions.length;
-      this.AverageDuration = isNaN(averageDuration) ? 'N/A' : averageDuration.toFixed(2);
-    },
-  
-    },
-    watch: {
-      selectedDate: 'recalculateUserEngagement',
-    }
-  }
-  </script>
-  
-  
-  
+   
   
   
   <style scoped> 
@@ -299,7 +300,7 @@
     justify-content: space-between;
     margin: 4rem 0 0 0;
     height: 15rem;
-    width: calc(100vw - 27rem);
+    width: 100%;
   }
   
   .user-engagement{
