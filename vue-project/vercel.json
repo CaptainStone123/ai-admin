@@ -1,10 +1,7 @@
 {
     "rewrites": [
-        {
-            "source": "/analytics",
-            "destination": "/src/views/AnalyticsView.vue"
-        }
-   
+      { "source": "/analytics", "destination": "/analytics"},
+      { "source": "/(.*)", "destination": "/" }
     ]
   }
   
