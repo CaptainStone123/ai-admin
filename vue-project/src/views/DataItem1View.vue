@@ -83,7 +83,7 @@ export default {
   <Navbar/>
   <Sidebar/>
   <div class="container">
-    <div class="items">
+    <div class="content">
       <div class="box">
         <h2 class="box-heading"><b>Information</b></h2>
         <div>
@@ -95,7 +95,7 @@ export default {
         </div>
       </div>
       <div class="bot">
-        <button class="saveBtn" @click="updateInfo">Save Changes</button>
+        <button class="secondary-button-save" @click="updateInfo">Save Changes</button>
       </div>
     </div>
   </div>
@@ -103,19 +103,6 @@ export default {
 </template>
 
 <style scoped>
-
-
-.saveBtn {
-  width: 100px;
-  height: 30px;
-  font-size: 12px;
-  margin-top: 20px;
-  margin-bottom: 50px;
-  border-radius: 5px;
-  background-color: white;;
-  border: 1px solid #364D5D;
-  cursor: pointer;
-}
 
 .bot{
   display: flex;

@@ -109,7 +109,7 @@ export default {
   <Navbar/>
   <Sidebar/>
   <div class="container">
-    <div class="items">
+    <div class="content">
       <div class="box">
         <h1 class="box-heading"><b>Account</b></h1>
         <div class="accountInfo">
@@ -134,8 +134,8 @@ export default {
         </div>
       </div>
       <div class="bot">
-        <button class="saveBtn" @click="updateInfo">Save Changes</button>
-        <button class="logoutBtn" @click="logout">Logout</button>
+        <button class="secondary-button-save" @click="updateInfo">Save Changes</button>
+        <button class="logout-button" @click="logout">Logout</button>
       </div>
     </div>
   </div>
@@ -143,45 +143,19 @@ export default {
 </template>
 
 <style scoped>
-
-.container {
-  display: flex;
-  justify-content: center;
-}
-.saveBtn {
-  width: 100px;
-  height: 30px;
-  font-size: 12px;
-  margin-top: 20px;
-  margin-bottom: 50px;
-  border-radius: 5px;
-  background-color: white;;
-  border: 1px solid #364D5D;
-  cursor: pointer;
-}
-
-.logoutBtn {
-  width: 100px;
-  height: 30px;
-  font-size: 12px;
-  margin-top: 20px;
-  margin-bottom: 50px;
-  margin-left: 10px;
-  border-radius: 5px;
-  color: white;
-  background-color: #003075;
-  cursor: pointer;
-}
-
 .accountInfo {
   display: flex;
   justify-content: space-between;
+  width: 100%;
 }
 .bot{
   display: flex;
   justify-content: right;
-}
+ }
 
+ .emailcon, .passcon{
+   width: 48%;
+ }
 .items {
   margin-right: 5%;
   width: 550px;

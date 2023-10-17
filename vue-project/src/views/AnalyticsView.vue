@@ -172,7 +172,7 @@ export default {
     <Sidebar/>
     <Navbar/>
     <div class="container">
-      <div class="items">
+      <div class="content">
         <section class="box">
           <span>
             <label for="datepicker"><b>Select Date </b></label>
