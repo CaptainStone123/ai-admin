@@ -73,12 +73,11 @@ export default {
             <input type="password" id="password" v-model="password" required>
             <span v-if="incorrectCredentials" class="incorrect">Incorrect email or password</span>
           </div>
-          <span class="forgot-pass">
-            <a   href="">Forgot password?</a>
-
-          </span>
-            <div class="form-group">
+          <div class="form-group">
             <button type="submit">Login</button>
+            <span class="forgot-pass">
+              <a href="">Forgot password?</a>
+            </span>
           </div>
         </form>
         
@@ -105,7 +104,7 @@ export default {
 .login-img{
   width: 100%;
   height: 100%;
-  background: url('../assets/login-bg-img.png') no-repeat center center;
+  background: url('../assets/1.png') no-repeat center center;
   background-size: cover;
 }
 .login-container {
@@ -136,8 +135,10 @@ h2{
   text-align: center;
   font-size: 1.4rem;}
 .forgot-pass{
-  text-align: end;
+  display: flex;
+  flex-direction: end;
   width: 100%;
+  padding: .5rem 0 .5rem 0;
 }
 form {
   display: flex;
@@ -153,15 +154,14 @@ form {
   margin-bottom: 10px;
   width: 100%;
 }
-.form-group label{
-  margin-bottom: .5rem;
-}
+ 
 input {
   width: 100%;
   height: 30px;
   border: 1px solid black;
   border-radius: 5px;
   padding: 1.25rem .5rem 1.25rem .5rem;
+  margin: .5rem 0 .5rem 0;
 }
   
 button {
@@ -171,7 +171,7 @@ button {
   background-color: white;
   border: 1px solid #364D5D;
   cursor: pointer;
-  margin-top: 10px;
+  margin: .5rem 0 .5rem 0;
 }
 .incorrect {
   color: red;
