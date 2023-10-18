@@ -135,7 +135,7 @@ export default {
         <div class="accountInfo">
           <div class="emailcon">
             <label for="email">Email:</label><br>
-            <input placeholder="Email" class="input-box" v-model="currentEmail" type="email" id="email" name="email"><br><br>
+            <input placeholder="Email" class="input-box" v-model="currentEmail" type="email" id="email" name="email" required><br><br>
             <label for="newemail">New Email:</label><br>
             <input placeholder="New email" class="input-box" v-model="newEmail" type="email" id="newemail" name="newemail"><br><br>
             <label for="emailconfirm">Re-Enter New Email:</label><br>
@@ -144,7 +144,7 @@ export default {
           </div>
           <div class="passcon">
             <label for="password">Password:</label><br>
-            <input placeholder="Password" class="input-box" v-model="currentPassword" type="password" id="password" name="password"><br><br>
+            <input placeholder="Password" class="input-box" v-model="currentPassword" type="password" id="password" name="password" required><br><br>
             <label for="newpass">New Password:</label><br>
             <input placeholder="New password" class="input-box" v-model="newPass" type="password" id="newpass" name="newpass"><br><br>
             <label for="passconfirm">Re-Enter New Password:</label><br>
