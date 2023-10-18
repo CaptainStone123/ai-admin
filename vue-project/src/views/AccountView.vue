@@ -24,8 +24,18 @@ export default {
     const router = useRouter();
 
     const updateInfo = async () => {
-      this.emailError = '';
-      this.passwordError = '';
+      emailError.value = '';
+      passwordError.value = '';
+
+      if (newEmail.value && !isValidEmail(newEmail.value)) {
+        emailError.value = 'Please enter a valid email address.';
+        return;
+      }
+
+      if (newPass.value && !isValidPassword(newPass.value)) {
+        passwordError.value = 'Password must contain both uppercase and lowercase letters, at least one number, and at least one special character.';
+        return;
+      }
 
       try {
         const response = await fetch('https://uaai-api.vercel.app/api/updateAccount', {
@@ -34,32 +44,32 @@ export default {
             'Content-Type': 'application/json',
           },
           body: JSON.stringify({
-            currentEmail: this.currentEmail,
-            newEmail: this.newEmail,
-            confirmemail: this.confirmemail,
-            currentPassword: this.currentPassword,
-            newPass: this.newPass,
-            confirmpass: this.confirmpass,
+            currentEmail: currentEmail.value,
+            newEmail: newEmail.value,
+            confirmemail: confirmemail.value,
+            currentPassword: currentPassword.value,
+            newPass: newPass.value,
+            confirmpass: confirmpass.value,
           }),
         });
 
         if (response.ok) {
-          this.currentEmail = '';
-          this.newEmail = '';
-          this.confirmemail = '';
-          this.currentPassword = '';
-          this.newPass = '';
-          this.confirmpass = '';
+          currentEmail.value = '';
+          newEmail.value = '';
+          confirmemail.value = '';
+          currentPassword.value = '';
+          newPass.value = '';
+          confirmpass.value = '';
 
         } else {
           const data = await response.json();
 
           if (data.error) {
             if (data.error === 'Invalid email or password') {
-              this.emailError = data.error;
-              this.passwordError = data.error;
+              emailError.value = data.error;
+              passwordError.value = data.error;
             } else {
-              this.emailError = data.error;
+              emailError.value = data.error;
             }
           }
         }
@@ -67,6 +77,16 @@ export default {
         console.error('Error updating account:', error);
       }
     };
+
+    function isValidEmail(email) {
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      return emailRegex.test(email);
+    }
+
+    function isValidPassword(password) {
+      const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]+$/;
+      return passwordRegex.test(password);
+    }
 
     const logout = async () => {
       try {
