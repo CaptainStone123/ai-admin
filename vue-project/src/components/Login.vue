@@ -74,7 +74,7 @@ export default {
             <span v-if="incorrectCredentials" class="incorrect">Incorrect email or password</span>
           </div>
           <div class="form-group">
-            <button type="submit">Login</button>
+            <button class="login-button" type="submit">Login</button>
             <span class="forgot-pass">
               <a href="">Forgot password?</a>
             </span>
@@ -163,16 +163,20 @@ input {
   margin: .5rem 0 .5rem 0;
 }
   
-button {
+.login-button {
   width:100%;
   height: 40px;
   border-radius: 5px;
- 
   background-color: #002366; 
   color: white;
-
   cursor: pointer;
   margin: .5rem 0 .5rem 0;
+  transition: background-color 0.2s, transform 0.1s;
+}
+
+.login-button:hover{
+  background-color: #003cff;
+
 }
 .incorrect {
   color: red;

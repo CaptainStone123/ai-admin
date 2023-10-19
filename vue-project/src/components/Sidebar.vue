@@ -112,8 +112,6 @@ export default {
     display: flex;
     align-items: center;
 }
- 
-
 .profile-img-cont{
   height: 65px; width: 65px;
   background-color: white;
@@ -121,13 +119,10 @@ export default {
   border-radius: 50%;
   display: flex; align-items: center; justify-content: center;
   box-shadow: 0 0 2px rgba(37, 37, 37, 0.5);
-
 }
 .profile-img{
  height: 55px;    
 }
-
- 
 .name{
     font-size: 1.2rem;
 }

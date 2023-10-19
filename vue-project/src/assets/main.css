@@ -98,6 +98,7 @@ border-radius: 5px;
 text-align: center;
 font-size: 16px;
 cursor: pointer;
+transition: background-color 0.2s, transform 0.1s;
 }
 
 .primary-button {
@@ -123,3 +124,6 @@ color: #364D5D;
 border: 1px solid #364D5D;
 margin-left: 1rem;
 }
+
+.primary-button:hover{background-color: #ffc400;}
+.secondary-button:hover, .secondary-button-save:hover {background-color: #003cff;}
