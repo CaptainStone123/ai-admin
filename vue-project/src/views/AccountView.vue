@@ -24,8 +24,18 @@ export default {
     const router = useRouter();
 
     const updateInfo = async () => {
-      this.emailError = '';
-      this.passwordError = '';
+      emailError.value = '';
+      passwordError.value = '';
+
+      if (newEmail.value && !isValidEmail(newEmail.value)) {
+        emailError.value = 'Please enter a valid email address.';
+        return;
+      }
+
+      if (newPass.value && !isValidPassword(newPass.value)) {
+        passwordError.value = 'Password must contain both uppercase and lowercase letters, at least one number, and at least one special character.';
+        return;
+      }
 
       try {
         const response = await fetch('https://uaai-api.vercel.app/api/updateAccount', {
@@ -34,32 +44,32 @@ export default {
             'Content-Type': 'application/json',
           },
           body: JSON.stringify({
-            currentEmail: this.currentEmail,
-            newEmail: this.newEmail,
-            confirmemail: this.confirmemail,
-            currentPassword: this.currentPassword,
-            newPass: this.newPass,
-            confirmpass: this.confirmpass,
+            currentEmail: currentEmail.value,
+            newEmail: newEmail.value,
+            confirmemail: confirmemail.value,
+            currentPassword: currentPassword.value,
+            newPass: newPass.value,
+            confirmpass: confirmpass.value,
           }),
         });
 
         if (response.ok) {
-          this.currentEmail = '';
-          this.newEmail = '';
-          this.confirmemail = '';
-          this.currentPassword = '';
-          this.newPass = '';
-          this.confirmpass = '';
+          currentEmail.value = '';
+          newEmail.value = '';
+          confirmemail.value = '';
+          currentPassword.value = '';
+          newPass.value = '';
+          confirmpass.value = '';
 
         } else {
           const data = await response.json();
 
           if (data.error) {
             if (data.error === 'Invalid email or password') {
-              this.emailError = data.error;
-              this.passwordError = data.error;
+              emailError.value = data.error;
+              passwordError.value = data.error;
             } else {
-              this.emailError = data.error;
+              emailError.value = data.error;
             }
           }
         }
@@ -67,6 +77,16 @@ export default {
         console.error('Error updating account:', error);
       }
     };
+
+    function isValidEmail(email) {
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      return emailRegex.test(email);
+    }
+
+    function isValidPassword(password) {
+      const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]+$/;
+      return passwordRegex.test(password);
+    }
 
     const logout = async () => {
       try {
@@ -115,20 +135,20 @@ export default {
         <div class="accountInfo">
           <div class="emailcon">
             <label for="email">Email:</label><br>
-            <input placeholder="Email" class="input-box" v-model="currentEmail" type="text" id="email" name="email"><br><br>
+            <input placeholder="Email" class="input-box" v-model="currentEmail" type="email" id="email" name="email" required><br><br>
             <label for="newemail">New Email:</label><br>
-            <input placeholder="New email" class="input-box" v-model="newEmail" type="text" id="newemail" name="newemail"><br><br>
+            <input placeholder="New email" class="input-box" v-model="newEmail" type="email" id="newemail" name="newemail"><br><br>
             <label for="emailconfirm">Re-Enter New Email:</label><br>
-            <input placeholder="Re-enter new email" class="input-box" v-model="confirmemail" type="text" id="emailconfirm" name="emailconfirm"><br><br>
+            <input placeholder="Re-enter new email" class="input-box" v-model="confirmemail" type="email" id="emailconfirm" name="emailconfirm"><br><br>
             <span class="error-message" v-if="emailError">{{ emailError }}</span>
           </div>
           <div class="passcon">
             <label for="password">Password:</label><br>
-            <input placeholder="Password" class="input-box" v-model="currentPassword" type="text" id="password" name="password"><br><br>
+            <input placeholder="Password" class="input-box" v-model="currentPassword" type="password" id="password" name="password" required><br><br>
             <label for="newpass">New Password:</label><br>
-            <input placeholder="New password" class="input-box" v-model="newPass" type="text" id="newpass" name="newpass"><br><br>
+            <input placeholder="New password" class="input-box" v-model="newPass" type="password" id="newpass" name="newpass"><br><br>
             <label for="passconfirm">Re-Enter New Password:</label><br>
-            <input placeholder="Re-enter new password" class="input-box" v-model="confirmpass" type="text" id="passconfirm" name="passconfirm"><br><br>
+            <input placeholder="Re-enter new password" class="input-box" v-model="confirmpass" type="password" id="passconfirm" name="passconfirm"><br><br>
             <span class="error-message" v-if="passwordError">{{ passwordError }}</span>
           </div>
         </div>
