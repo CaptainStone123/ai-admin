@@ -29,7 +29,7 @@ export default {
     
 
     axios
-    .get(this.baseUrl+'api/getRoleFromMongoDB')
+    .get(this.baseUrl+'/api/getRoleFromMongoDB')
     .then(response => {
       console.log('ClassifierName API Response:', response.data);
       if (response.data && response.data.Role) {
@@ -46,7 +46,7 @@ export default {
     });
 
     axios
-    .get(this.baseUrl+'api/getIntroductionFromMongoDB')
+    .get(this.baseUrl+'/api/getIntroductionFromMongoDB')
     .then(response => {
       console.log('ClassifierName API Response:', response.data);
       if (response.data && response.data.Introduction) {
@@ -63,7 +63,7 @@ export default {
     });
 
     axios
-    .get(this.baseUrl+'api/getModelFromMongoDB')
+    .get(this.baseUrl+'/api/getModelFromMongoDB')
     .then(response => {
       console.log('ClassifierName API Response:', response.data);
       if (response.data && response.data.Model) {
@@ -77,7 +77,7 @@ export default {
     });
 
     axios
-    .get(this.baseUrl+'api/getIntlimitFromMongoDB')
+    .get(this.baseUrl+'/api/getIntlimitFromMongoDB')
     .then(response => {
       console.log('ClassifierName API Response:', response.data);
       if (response.data && response.data.Intlimit) {
@@ -144,7 +144,7 @@ export default {
     updateData.Temperature = this.temperatureLevel;
 
     if (Object.keys(updateData).length > 0) {
-      const response = await axios.put(this.baseUrl+'api/updateProfile', updateData);
+      const response = await axios.put(this.baseUrl+'/api/updateProfile', updateData);
 
       console.log('Profile updated successfully:', response.data);
     } else {
