@@ -15,6 +15,7 @@ export default {
   },
   data() {
     return {
+      baseUrl:'https://ua-ai-llm.vercel.app',
       sessions: [],
       SessionCount: '',
       DurationCount: '',
@@ -25,7 +26,7 @@ export default {
     };
   },
   created() {
-    axios.get('https://uaai-api.vercel.app/api/getAllSessions')
+    axios.get(this.baseUrl+'/api/getAllSessions')
     .then(response => {
         this.sessions = response.data;
         this.calculateDurationCount();
@@ -34,7 +35,7 @@ export default {
         console.error('Error fetching sessions:', error);
       });
     
-    axios.get('https://uaai-api.vercel.app/api/getKeywords')
+    axios.get(this.baseUrl+'/api/getKeywords')
     .then(response => {
       this.topKeywords = response.data.sort((a, b) => b.count - a.count);
       })
@@ -44,7 +45,7 @@ export default {
   },
   mounted() {
     axios
-      .get('https://uaai-api.vercel.app/api/SessionCount')
+      .get(this.baseUrl+'/api/SessionCount')
       .then(response => {
         console.log('SessionCount API Response:', response.data);
         if (response.data && response.data.count) {
@@ -266,91 +267,84 @@ export default {
       </section>
   
       </div>
-     
     </div>
   </div>
-  </template>
+</template>
    
-  
-  
-  <style scoped> 
-  .keyword-container{
-     width: 100%;
-   display: grid;  
-   grid-template-columns: 1fr 1fr;
-  }
-  
-  .keyword-item ul{
-    display: flex;
-    margin: .2rem 0 .2rem 0;
-  }
+<style scoped> 
+.keyword-container{
+  width: 100%;
+  display: grid;  
+  grid-template-columns: 1fr 1fr;
+}
+.keyword-item ul{
+  display: flex; margin: .2rem 0 .2rem 0;
+}
+.keyword-columns {
+  display: flex; gap: 3.5rem;
+}
 
-  .keyword-columns {
-    display: flex;
-    gap: 3.5rem;
-  }
+.keyword-item ul li{
+  padding: 0 .2rem 0 .2rem;
+}
+
+hr{
+  margin: .5rem 0 .5rem 0;
+}
+.analytics-box1{
+  display: flex;
+  justify-content: space-between;
+  margin: 4rem 0 0 0;
+  height: 15rem;
+  width: 100%;
+}
+
+.user-engagement{
+  background-color: white;
+  width: 35%;
+  height: 100%;
+  border-radius: 5px;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  padding: 2rem;
+}
+.user-engagement span, .keywords span {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.keywords{
+  background-color: white;
+  width: 60%;
+  height: 100%;
+  border-radius: 5px;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  padding: 2rem;
+}
+
+.date-input{
+  background-color: #F4F5F7;
+  padding: .5rem;
+}
+
+.ue-row1{
+  display: flex;
+  width: 60%;
+  font-size: 2rem;
+  margin: 1rem 0 1rem 0;
+}
+
+.ue-row2{
+  display: flex;
   
-  .keyword-item ul li{
-    padding: 0 .2rem 0 .2rem;
-  }
+  margin: 1rem 0 1rem 0;
+}
+
+.ue-row3{
+  display: flex;
   
-  hr{
-    margin: .5rem 0 .5rem 0;
-  }
-  .analytics-box1{
-    display: flex;
-    justify-content: space-between;
-    margin: 4rem 0 0 0;
-    height: 15rem;
-    width: 100%;
-  }
-  
-  .user-engagement{
-    background-color: white;
-    width: 35%;
-    height: 100%;
-    border-radius: 5px;
-    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-    padding: 2rem;
-  }
-  .user-engagement span, .keywords span {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-  
-  .keywords{
-    background-color: white;
-    width: 60%;
-    height: 100%;
-    border-radius: 5px;
-    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-    padding: 2rem;
-  }
-  
-  .date-input{
-    background-color: #F4F5F7;
-    padding: .5rem;
-  }
-  
-  .ue-row1{
-    display: flex;
-    width: 60%;
-    font-size: 2rem;
-    margin: 1rem 0 1rem 0;
-  }
-  
-  .ue-row2{
-    display: flex;
-   
-    margin: 1rem 0 1rem 0;
-  }
-  
-  .ue-row3{
-    display: flex;
-   
-    margin: 1rem 0 1rem 0;
-  }
-  </style>
-  
+  margin: 1rem 0 1rem 0;
+}
+</style>
+
    

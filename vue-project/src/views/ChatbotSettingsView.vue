@@ -4,24 +4,17 @@ import Navbar from '../components/Navbar.vue'
 import axios from 'axios';
 
 export default {
-  components: {
-    Sidebar,
-    Navbar,
-  },
+  components: {Sidebar, Navbar,},
   data() {
     return {
-      newName: '', 
-      newRole: '', 
-      newIntro: '', 
-      newModel: '',
-      newIntlimit: '',
-      Image: '',
+      baseUrl:'https://ua-ai-llm.vercel.app',
+      newName: '', newRole: '', newIntro: '', newModel: '', newIntlimit: '', Image: '',
       sliderValue: 50,
     };
   },
   mounted() {
     axios
-    .get('https://uaai-api.vercel.app/api/getNameFromMongoDB')
+    .get(this.baseUrl+'/api/getNameFromMongoDB')
     .then(response => {
       console.log('ClassifierName API Response:', response.data);
       if (response.data && response.data.Name) {
@@ -36,7 +29,7 @@ export default {
     
 
     axios
-    .get('https://uaai-api.vercel.app/api/getRoleFromMongoDB')
+    .get(this.baseUrl+'api/getRoleFromMongoDB')
     .then(response => {
       console.log('ClassifierName API Response:', response.data);
       if (response.data && response.data.Role) {
@@ -53,7 +46,7 @@ export default {
     });
 
     axios
-    .get('https://uaai-api.vercel.app/api/getIntroductionFromMongoDB')
+    .get(this.baseUrl+'api/getIntroductionFromMongoDB')
     .then(response => {
       console.log('ClassifierName API Response:', response.data);
       if (response.data && response.data.Introduction) {
@@ -70,7 +63,7 @@ export default {
     });
 
     axios
-    .get('https://uaai-api.vercel.app/api/getModelFromMongoDB')
+    .get(this.baseUrl+'api/getModelFromMongoDB')
     .then(response => {
       console.log('ClassifierName API Response:', response.data);
       if (response.data && response.data.Model) {
@@ -84,7 +77,7 @@ export default {
     });
 
     axios
-    .get('https://uaai-api.vercel.app/api/getIntlimitFromMongoDB')
+    .get(this.baseUrl+'api/getIntlimitFromMongoDB')
     .then(response => {
       console.log('ClassifierName API Response:', response.data);
       if (response.data && response.data.Intlimit) {
@@ -147,11 +140,11 @@ export default {
     if (this.Image.trim() !== '') {
       updateData.Image = this.Image;
     }
-
+ 
     updateData.Temperature = this.temperatureLevel;
 
     if (Object.keys(updateData).length > 0) {
-      const response = await axios.put('https://uaai-api.vercel.app/api/updateProfile', updateData);
+      const response = await axios.put(this.baseUrl+'api/updateProfile', updateData);
 
       console.log('Profile updated successfully:', response.data);
     } else {
@@ -229,37 +222,28 @@ export default {
   
 <style scoped>
 .bot{
-  display: flex;
-  justify-content: right;
+  display: flex; justify-content: right;
 }
 .tempval {
   display: flex;
 }
 .saveBtn {
-  width: 100px;
-  height: 30px;
+  width: 100px; height: 30px;
   font-size: 12px;
-  margin-top: 20px;
-  margin-bottom: 50px;
+  margin-top: 20px; margin-bottom: 50px;
   border-radius: 5px;
-  background-color: white;;
-  border: 1px solid #364D5D;
+  background-color: white; border: 1px solid #364D5D;
   cursor: pointer;
 }
-
 .bot{
-  display: flex;
-  justify-content: right;
+  display: flex; justify-content: right;
 }
-
 .items{
-  display: flex;
-  flex-direction: column;
+  display: flex; flex-direction: column;
 }
 .box-content{
   text-align: left;
 }
-
 .edit {
   background-color: white;
   padding: 6px;

@@ -11,6 +11,7 @@ export default {
   },
   data() {
     return {
+      baseUrl:'https://ua-ai-llm.vercel.app',
       Label: '',
       Content: '',
       information: this.$route.params.information,
@@ -49,7 +50,7 @@ export default {
     }
 
     axios
-      .get(`https://uaai-api.vercel.app/api/getClassNameFromMongoDB/${selectedObject.className}`)
+      .get(this.baseUrl+`/api/getClassNameFromMongoDB/${selectedObject.className}`)
       .then(response => {
         console.log('ClassifierName API Response:', response.data);
         if (response.data && response.data.name) {
@@ -63,7 +64,7 @@ export default {
       });
 
       axios
-  .get(`https://uaai-api.vercel.app/api/${selectedObject.api}`)
+  .get(this.baseUrl+`/api/${selectedObject.api}`)
   .then(response => {
     console.log('API Response:', response.data.faq);
     if (response.data && response.data[selectedObject.dataCont]) {
@@ -106,7 +107,7 @@ export default {
         }
 
         if (Object.keys(updateData).length > 0) {
-          const response = await axios.put(`https://uaai-api.vercel.app/api/${selectedObject.update}`, updateData);
+          const response = await axios.put(this.baseUrl+`/api/${selectedObject.update}`, updateData);
 
           console.log('Information updated successfully:', response.data);
         } else {
@@ -145,8 +146,6 @@ export default {
   </template>
   
   <style scoped>
-  
-   
   .bot{
     display: flex;
     justify-content: right;

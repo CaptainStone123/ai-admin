@@ -10,6 +10,8 @@ export default {
   },
   data() {
     return {
+      baseUrl:'https://ua-ai-llm.vercel.app',
+      localUrl:'http://localhost:5000',
       input: '',
       isLoading: false,
       error: null,
@@ -20,7 +22,7 @@ export default {
     };
   },
   mounted() {
-    axios.get('https://uaai-api.vercel.app/api/getImageFromMongoDB')
+    axios.get(this.baseUrl+'/api/getImageFromMongoDB')
         .then(response => {
             const imageName = response.data.Image || 'stacy.png'; 
             const imageSrc = `/${imageName}`;
@@ -58,7 +60,7 @@ export default {
         }
       };
       try {
-        const response = await fetch('http://localhost:5000/completions', options);
+        const response = await fetch(this.localUrl+'/completions', options);
         const data = await response.json();
         const conMessage = data.choices[0].message;
 
@@ -103,7 +105,6 @@ export default {
                 <span class="role"> 
                   <!-- <img class="h-[2.5rem]" src="../assets/profile.png" alt=""> -->
                   <img class="profile-img h-[2.5rem]" ref="profileImage" alt="">
-
                 </span>
                 <span class="message text-[15px] mx-[10px]" v-html="message.content"></span>
               </div>

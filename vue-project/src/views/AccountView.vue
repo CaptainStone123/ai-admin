@@ -10,6 +10,11 @@ export default {
     Sidebar,
     Navbar,
   },
+  data() {
+    return {
+      baseUrl:'https://ua-ai-llm.vercel.app',
+    };
+  },
   setup() {
     const currentEmail = ref('');
     const newEmail = ref('');
@@ -38,7 +43,7 @@ export default {
       }
 
       try {
-        const response = await fetch('https://uaai-api.vercel.app/api/updateAccount', {
+        const response = await fetch(this.baseUrl+'/api/updateAccount', {
           method: 'PUT',
           headers: {
             'Content-Type': 'application/json',

@@ -10,6 +10,7 @@ export default {
   },
     data() {
       return {
+        baseUrl:'https://ua-ai-llm.vercel.app',
         classify: '',
         faq: '',
         about: '', 
@@ -19,7 +20,7 @@ export default {
     },
     mounted() {
       axios
-      .get('https://uaai-api.vercel.app/api/getClassifierNameFromMongoDB')
+      .get(this.baseUrl+'/api/getClassifierNameFromMongoDB')
       .then(response => {
         console.log('ClassifierName API Response:', response.data);
         if (response.data && response.data.name) {
@@ -33,7 +34,7 @@ export default {
       });
 
       axios
-      .get('https://uaai-api.vercel.app/api/getClassNameFromMongoDB/frequently_asked')
+      .get(this.baseUrl+'/api/getClassNameFromMongoDB/frequently_asked')
       .then(response => {
         if (response.data && response.data.name) {
           this.faq = response.data.name;
@@ -46,7 +47,7 @@ export default {
       });
 
       axios
-      .get('https://uaai-api.vercel.app/api/getClassNameFromMongoDB/about_ua')
+      .get(this.baseUrl+'/api/getClassNameFromMongoDB/about_ua')
       .then(response => {
         if (response.data && response.data.name) {
           this.about = response.data.name;
@@ -59,7 +60,7 @@ export default {
       });
 
       axios
-      .get('https://uaai-api.vercel.app/api/getClassNameFromMongoDB/admissions')
+      .get(this.baseUrl+'/api/getClassNameFromMongoDB/admissions')
       .then(response => {
         if (response.data && response.data.name) {
           this.admissions = response.data.name;
@@ -72,7 +73,7 @@ export default {
       });
 
       axios
-      .get('https://uaai-api.vercel.app/api/getClassNameFromMongoDB/academics')
+      .get(this.baseUrl+'/api/getClassNameFromMongoDB/academics')
       .then(response => {
         if (response.data && response.data.name) {
           this.academics = response.data.name;

@@ -10,13 +10,14 @@ export default {
   },
   data() {
     return {
+      baseUrl:'https://ua-ai-llm.vercel.app',
       Label: '',
       Content: '',
     };
   },
   mounted() {
     axios
-      .get('https://uaai-api.vercel.app/api/getClassifierNameFromMongoDB')
+      .get(this.baseUrl+'/api/getClassifierNameFromMongoDB')
       .then(response => {
         console.log('ClassifierName API Response:', response.data);
         if (response.data && response.data.name) {
@@ -33,7 +34,7 @@ export default {
       });
   
     axios
-      .get('https://uaai-api.vercel.app/api/getClassifierFromMongoDB')
+      .get(this.baseUrl+'/api/getClassifierFromMongoDB')
       .then(response => {
         if (response.data && response.data.classifier) {
           this.Content = response.data.classifier; 
@@ -64,7 +65,7 @@ export default {
     }
 
     if (Object.keys(updateData).length > 0) {
-      const response = await axios.put('https://uaai-api.vercel.app/api/updateClassifier', updateData);
+      const response = await axios.put(this.baseUrl+'/api/updateClassifier', updateData);
 
       console.log('information updated successfully:', response.data);
     } else {
@@ -114,12 +115,6 @@ input{
   height: 20px;
   margin-bottom: 10px;
 }
-
-/* .text-area {
-  resize: none;
-  overflow-y: hidden;
-} */
-
 </style>
 
  
