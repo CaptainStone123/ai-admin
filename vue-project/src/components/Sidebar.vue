@@ -6,10 +6,11 @@ export default {
     data() {
         return {
             Name: '',
+            baseUrl:'https://ua-ai-llm.vercel.app',
         };
     },
     mounted() {
-        axios.get('https://uaai-api.vercel.app/api/getNameFromMongoDB')
+        axios.get(this.baseUrl+'/api/getNameFromMongoDB')
         .then(response => {
             this.Name = response.data.Name;
         })
@@ -19,7 +20,7 @@ export default {
             console.log('Response data:', error.response ? error.response.data : 'N/A');
         });
 
-        axios.get('https://uaai-api.vercel.app/api/getImageFromMongoDB')
+        axios.get(this.baseUrl+'/api/getImageFromMongoDB')
             .then(response => {
                 const imageName = response.data.Image || 'stacy.png'; 
                 const imageSrc = `/${imageName}`;
