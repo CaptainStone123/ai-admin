@@ -137,25 +137,25 @@ export default {
               <td>3641</td>
               <td>one_111</td>
               <td>{{ faq }}</td>
-              <td class="details-btn-td"><button class="secondary-button"><RouterLink to="/knowledge-source/data-item-2">Edit</RouterLink></button></td>
+              <td class="details-btn-td"><button class="secondary-button"><RouterLink to="/knowledge-source/frequently_asked">Edit</RouterLink></button></td>
             </tr>
             <tr>
                <td>12696</td>
               <td>two_222</td>
               <td>{{ about }}</td>
-              <td class="details-btn-td"><button class="secondary-button"><RouterLink to="/knowledge-source/data-item-3">Edit</RouterLink></button></td>
+              <td class="details-btn-td"><button class="secondary-button"><RouterLink to="/knowledge-source/about">Edit</RouterLink></button></td>
             </tr>
             <tr>
                <td>8779</td>
               <td>three_333</td>
               <td>{{ admissions }}</td>
-              <td class="details-btn-td"><button class="secondary-button"><RouterLink to="/knowledge-source/data-item-4">Edit</RouterLink></button></td>
+              <td class="details-btn-td"><button class="secondary-button"><RouterLink to="/knowledge-source/admissions">Edit</RouterLink></button></td>
             </tr>
             <tr>
               <td>3437</td>
               <td>four_444</td>
               <td>{{ academics }}</td>
-              <td class="details-btn-td"><button class="secondary-button"><RouterLink to="/knowledge-source/data-item-5">Edit</RouterLink></button></td>
+              <td class="details-btn-td"><button class="secondary-button"><RouterLink to="/knowledge-source/academics">Edit</RouterLink></button></td>
             </tr>
           </tbody>
         </table>
