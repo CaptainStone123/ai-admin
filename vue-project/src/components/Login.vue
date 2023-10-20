@@ -5,11 +5,7 @@ import { useStore } from 'vuex';
 
 export default {
   name: 'Login',
-  data() {
-    return {
-      baseUrl:'https://ua-ai-llm.vercel.app',
-    };
-  },
+ 
   setup() {
     const store = useStore();
     const router = useRouter();
@@ -20,11 +16,11 @@ export default {
 
     const login = async () => {
       try {
-        const emailResponse = await fetch(this.baseUrl+'/api/getEmailFromMongoDB');
+        const emailResponse = await fetch('https://ua-ai-llm.vercel.app/api/getEmailFromMongoDB');
         const emailData = await emailResponse.json();
         const storedEmail = emailData.email;
 
-        const passwordResponse = await fetch(this.baseUrl+'/api/getPasswordFromMongoDB');
+        const passwordResponse = await fetch('https://ua-ai-llm.vercel.app/api/getPasswordFromMongoDB');
         const passwordData = await passwordResponse.json();
         const storedPassword = passwordData.password;
 
