@@ -1,31 +1,45 @@
-
 <script>
 import Sidebar from '../components/Sidebar.vue'
 import Navbar from '../components/Navbar.vue'
+import BarChart from '../components/BarChart.vue'
 import axios from 'axios';
+import { GChart } from 'vue-google-charts';
 
 export default {
-  components: {
-    Sidebar,
-    Navbar,
-  },
-  components: {
-    Sidebar,
-    Navbar,
-  },
+  components: {Sidebar, Navbar, BarChart , GChart },
   data() {
     return {
       baseUrl:'https://ua-ai-llm.vercel.app',
-      sessions: [],
+      sessions: [],      topKeywords: [],
       SessionCount: '',
       DurationCount: '',
       AverageDuration: '',
       selectedDate: null,
-      topKeywords: [],
       topTen: 10,
+     
+      columnChartData: [['Keyword', 'Count']],
+      chartOptions: {
+        height: 300,
+         chartArea: { width: '100%', height: '80%' },
+      },
+      donutChartData: [
+        ['Metric', 'Value'],
+        ['No. user inquiries', 0],
+        ['Average Session Duration', 0],
+      ],
+      donutChartOptions: {
+        height: 210,
+        chartArea: { width: '90%', height: '90%' },
+        pieHole: 0.4,   
+        dataTable: {
+          format: ['string', 'number'],
+          sourceColumn: 0,
+        },
+      },
     };
   },
   created() {
+    
     axios.get(this.baseUrl+'/api/getAllSessions')
     .then(response => {
         this.sessions = response.data;
@@ -60,6 +74,12 @@ export default {
       });
   },
   computed: {
+    
+    transformedData() {
+      // Create an array of arrays from topKeywords
+      return this.topKeywords.slice(0, 10).map(keyword => [keyword._id, keyword.count]);
+    },
+    
     filteredSessions() {
     if (!this.selectedDate) {
       return this.sessions;
@@ -93,6 +113,24 @@ export default {
     },
   },
   methods: {
+    updateChartData() {
+      // Update columnChartData when topKeywords changes
+      this.columnChartData = [['Keyword', 'Count'], ...this.transformedData];
+    },
+
+    updateDonutChartData() {
+      // Calculate the percentages
+      const totalValue = this.DurationCount + this.AverageDuration;
+      const noUserInquiriesPercentage = (this.DurationCount / totalValue) * 100;
+      const averageSessionDurationPercentage = (this.AverageDuration / totalValue) * 100;
+
+      // Update the donutChartData with the calculated percentages
+      this.donutChartData = [
+        ['Metric', 'Percentage'],
+        ['No. user inquiries', noUserInquiriesPercentage],
+        ['Average Session Duration', averageSessionDurationPercentage],
+      ];
+    },
   calculateDurationCount() {
     let count = 0;
     for (const session of this.sessions) {
@@ -122,7 +160,6 @@ export default {
     const selectedMonth = selectedDate.getMonth() + 1;
     const selectedDay = selectedDate.getDate();
 
-    
     return this.sessions.filter((session) => {
       const sessionDate = new Date(session.date);
       const sessionYear = sessionDate.getFullYear();
@@ -138,9 +175,7 @@ export default {
   },
 
   recalculateUserEngagement() {
-  
     const filteredSessions = this.filterSessionsByDate();
-
     let count = 0;
     for (const session of filteredSessions) {
       if (session.details && Array.isArray(session.details)) {
@@ -148,9 +183,7 @@ export default {
       }
     }
     this.DurationCount = count;
-
     this.SessionCount = filteredSessions.length;
-
     let totalDuration = 0;
     for (const session of filteredSessions) {
       totalDuration += session.duration;
@@ -158,10 +191,16 @@ export default {
     const averageDuration = totalDuration / filteredSessions.length;
     this.AverageDuration = isNaN(averageDuration) ? 'N/A' : averageDuration.toFixed(2);
   },
-
   },
   watch: {
     selectedDate: 'recalculateUserEngagement',
+    DurationCount: 'updateDonutChartData',
+    AverageDuration: 'updateDonutChartData',
+    topKeywords: {
+      handler: 'updateChartData',
+      deep: true,
+    },
+
   }
 }
 </script>
@@ -186,50 +225,33 @@ export default {
         <form class="user-engagement">
           <dl>
             <span class="ue-row1">
-                <dt><b>Sessions: </b></dt>
+                <dt><b>Sessions:</b></dt>
                 <dd><b>{{ SessionCount }}</b></dd>    
             </span>
-      
-            <span class="ue-row2">
-              <dt>No. user inquiries:</dt>
-              <dd>{{ DurationCount }}</dd>
-            </span>
-            
-            <span class="ue-row2">
-              <dt>Average Session Duration:</dt>
-              <dd>{{ AverageDuration }}</dd>
-            </span>
-        
+            <g-chart type="PieChart" :data="donutChartData" :options="donutChartOptions"></g-chart>
           </dl>
         </form>
         <form class="keywords">
           <h2 class="box-heading"><b>Top Keywords</b></h2>
           <div class="keyword-columns">
             <div class="keyword-column">
-              <!-- put index in v-for keyword if it will be uncommented -->
-              <span class="keyword-item" v-for="(keyword) in topKeywords.slice(0, 5)" :key="keyword._id">
+              <g-chart type="ColumnChart" :data="columnChartData" :options="donutChartOptions"></g-chart>
+
+              <!-- <span class="keyword-item" v-for="(keyword) in topKeywords.slice(0, 10)" :key="keyword._id">
                 <ul>
-                  <!-- <li>{{ index + 1 }}.</li> -->
                   <li>{{ keyword.count }}</li>
                   <li>{{ keyword._id }}</li>
                 </ul>
-              </span>
+              </span> -->
             </div>
-            <div class="keyword-column">
-              <!-- put index in v-for keyword if it will be uncommented -->
-              <span class="keyword-item" v-for="(keyword) in topKeywords.slice(5, 10)" :key="keyword._id">
-                <ul>
-                  <!-- <li>{{ index + 6 }}.</li> -->
-                  <li>{{ keyword.count }}</li>
-                  <li>{{ keyword._id }}</li>
-                </ul>
-              </span>
-            </div>
+      
           </div>
         </form>
       </section>
-  
-      <section class="analytics-box2">
+      <!-- <div class="analytics-bargraph">
+        <BarChart/>
+      </div> -->
+       <section class="analytics-box2">
         <div class="box">
           <h2 class="box-heading"><b>Records</b></h2>
           <table>
@@ -280,9 +302,6 @@ export default {
 .keyword-item ul{
   display: flex; margin: .2rem 0 .2rem 0;
 }
-.keyword-columns {
-  display: flex; gap: 3.5rem;
-}
 
 .keyword-item ul li{
   padding: 0 .2rem 0 .2rem;
@@ -291,13 +310,20 @@ export default {
 hr{
   margin: .5rem 0 .5rem 0;
 }
+.analytics-bargraph{
+  display: flex;
+  justify-content: space-between;
+  margin: 4rem 0 0 0;
+  width: 100%;
+}
 .analytics-box1{
   display: flex;
   justify-content: space-between;
   margin: 4rem 0 0 0;
-  height: 15rem;
+  height: 19rem;
   width: 100%;
-}
+ }
+ 
 
 .user-engagement{
   background-color: white;
@@ -331,12 +357,10 @@ hr{
   display: flex;
   width: 60%;
   font-size: 2rem;
-  margin: 1rem 0 1rem 0;
-}
+ }
 
 .ue-row2{
   display: flex;
-  
   margin: 1rem 0 1rem 0;
 }
 
