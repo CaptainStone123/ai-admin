@@ -113,7 +113,7 @@ export default {
             <td >1.</td>
             <td >365</td>
             <td >{{ classify }}</td>
-            <td class="details-btn-td"><button class="secondary-button"><RouterLink to="/knowledge-source/data-item-1">Edit</RouterLink></button></td>
+            <td class="details-btn-td"><button class="secondary-button"><RouterLink to="/knowledge-source/main/classifier">Edit</RouterLink></button></td>
           </tr>
         </tbody>
         </table>

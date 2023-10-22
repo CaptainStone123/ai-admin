@@ -10,10 +10,8 @@ export default {
   data() {
     return {
       baseUrl:'https://ua-ai-llm.vercel.app',
-      sessions: [],      topKeywords: [],
-      SessionCount: '',
-      DurationCount: '',
-      AverageDuration: '',
+      sessions: [], topKeywords: [],
+      SessionCount: '',DurationCount: '',AverageDuration: '',
       selectedDate: null,
       topTen: 10,
      
@@ -22,11 +20,7 @@ export default {
         height: 300,
          chartArea: { width: '100%', height: '80%' },
       },
-      donutChartData: [
-        ['Metric', 'Value'],
-        ['No. user inquiries', 0],
-        ['Average Session Duration', 0],
-      ],
+      donutChartData: [['Metric', 'Value'], ['No. user inquiries', 0], ['Average Session Duration', 0],],
       donutChartOptions: {
         height: 210,
         chartArea: { width: '90%', height: '90%' },
@@ -205,8 +199,6 @@ export default {
 }
 </script>
 
-
-
 <template>
   <div class="navside">
     <Sidebar/>
@@ -236,53 +228,32 @@ export default {
           <div class="keyword-columns">
             <div class="keyword-column">
               <g-chart type="ColumnChart" :data="columnChartData" :options="donutChartOptions"></g-chart>
-
-              <!-- <span class="keyword-item" v-for="(keyword) in topKeywords.slice(0, 10)" :key="keyword._id">
-                <ul>
-                  <li>{{ keyword.count }}</li>
-                  <li>{{ keyword._id }}</li>
-                </ul>
-              </span> -->
             </div>
-      
           </div>
         </form>
       </section>
-      <!-- <div class="analytics-bargraph">
-        <BarChart/>
-      </div> -->
-       <section class="analytics-box2">
+ 
+      <section class="analytics-box2">
         <div class="box">
           <h2 class="box-heading"><b>Records</b></h2>
           <table>
             <thead>
               <tr>
-                  <!-- <th width="10%">No.</th> -->
-                  <!-- <th width="20%">Session ID</th> -->
-                  <th width="20%">Duration</th>
-                  <th width="80%">Details</th>
-                  <!-- <th width="20%" > </th> -->
-               </tr>
+                <th width="20%">Duration</th>
+                <th width="80%">Details</th>
+              </tr>
             </thead>
             <tbody>
               <tr v-for="(session, index) in filteredSessions" :key="session.customId">
-                <!-- <td>{{ index + 1 }}</td> -->
-                <!-- <td>{{ session.customId }}</td> -->
                 <td>{{ session.duration }}</td>
                 <td>
                   <ul>
                     <li v-for="(detail, detailIndex) in sortedDetails[index]" :key="detailIndex">
                       • {{ detail.content }}
                     </li>
-
-                    <!--Unorderdered by length but ordered in a way sa pagkakasunodsunod ng message to-->
-                    <!-- <li v-for="(detail, detailIndex) in session.details" :key="detailIndex">
-                      • {{ detail.content }}
-                    </li> -->
                   </ul>
                 </td>
-                <!-- <td class="details-btn-td"><button class="details-tbn">view</button></td> -->
-              </tr>
+               </tr>
             </tbody>
           </table>
         </div>
@@ -294,81 +265,21 @@ export default {
 </template>
    
 <style scoped> 
-.keyword-container{
-  width: 100%;
-  display: grid;  
-  grid-template-columns: 1fr 1fr;
-}
-.keyword-item ul{
-  display: flex; margin: .2rem 0 .2rem 0;
-}
+.keyword-container{width: 100%;display: grid; grid-template-columns: 1fr 1fr;}
+.keyword-item ul{display: flex; margin: .2rem 0 .2rem 0;}
+.keyword-item ul li{padding: 0 .2rem 0 .2rem;}
 
-.keyword-item ul li{
-  padding: 0 .2rem 0 .2rem;
-}
+hr{ margin: .5rem 0 .5rem 0;}
+.analytics-bargraph{display: flex;justify-content: space-between;margin: 4rem 0 0 0;width: 100%;}
+.analytics-box1{display: flex;justify-content: space-between;margin: 4rem 0 0 0;height: 19rem;width: 100%;}
 
-hr{
-  margin: .5rem 0 .5rem 0;
-}
-.analytics-bargraph{
-  display: flex;
-  justify-content: space-between;
-  margin: 4rem 0 0 0;
-  width: 100%;
-}
-.analytics-box1{
-  display: flex;
-  justify-content: space-between;
-  margin: 4rem 0 0 0;
-  height: 19rem;
-  width: 100%;
- }
- 
-
-.user-engagement{
-  background-color: white;
-  width: 35%;
-  height: 100%;
-  border-radius: 5px;
-  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-  padding: 2rem;
-}
-.user-engagement span, .keywords span {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.keywords{
-  background-color: white;
-  width: 60%;
-  height: 100%;
-  border-radius: 5px;
-  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-  padding: 2rem;
-}
-
-.date-input{
-  background-color: #F4F5F7;
-  padding: .5rem;
-}
-
-.ue-row1{
-  display: flex;
-  width: 60%;
-  font-size: 2rem;
- }
-
-.ue-row2{
-  display: flex;
-  margin: 1rem 0 1rem 0;
-}
-
-.ue-row3{
-  display: flex;
-  
-  margin: 1rem 0 1rem 0;
-}
+.user-engagement{background-color: white;width: 35%;height: 100%;border-radius: 5px;box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);padding: 2rem;}
+.user-engagement span, .keywords span {display: flex; justify-content: space-between;align-items: center;}
+.keywords{background-color: white;width: 60%;height: 100%;border-radius: 5px;box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);padding: 2rem;}
+.date-input{background-color: #F4F5F7;padding: .5rem;}
+.ue-row1{display: flex;  width: 60%;font-size: 2rem;}
+.ue-row2{display: flex; margin: 1rem 0 1rem 0;}
+.ue-row3{display: flex;margin: 1rem 0 1rem 0;}
 </style>
 
    

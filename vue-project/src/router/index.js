@@ -42,6 +42,12 @@ const router = createRouter({
       meta: { requiresAuth: true },
     },
     {
+      path: '/knowledge-source/main/classifier',
+      name: 'classifier',
+      component: ClassifierView,
+      meta: { requiresAuth: true },
+    },
+    {
       path: '/knowledge-source/:information',
       name: 'Information',
       component: Information,
