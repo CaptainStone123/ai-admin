@@ -10,6 +10,7 @@ export default {
   data() {
     return {
       baseUrl:'https://ua-ai-llm.vercel.app',
+      // baseUrl: 'http://localhost:3000',
       sessions: [], topKeywords: [],
       SessionCount: '',DurationCount: '',AverageDuration: '',
       selectedDate: null,
@@ -33,6 +34,15 @@ export default {
     };
   },
   created() {
+    const customId = this.$route.params.details;
+    axios.get(this.baseUrl + '/api/getSessionDetails/' + customId)
+    .then(response => {
+      this.sessions = [response.data];
+      this.calculateDurationCount();
+    })
+    .catch(error => {
+      console.error('Error fetching session details:', error);
+    });
     
     axios.get(this.baseUrl+'/api/getAllSessions')
     .then(response => {
@@ -68,6 +78,15 @@ export default {
       });
   },
   computed: {
+
+    firstDetails() {
+    return this.filteredSessions.map(session => {
+      if (session.details && session.details.length > 0) {
+        return session.details[0];
+      }
+      return null;
+      });
+    },
     
     transformedData() {
       // Create an array of arrays from topKeywords
@@ -78,6 +97,8 @@ export default {
     if (!this.selectedDate) {
       return this.sessions;
     }
+
+    
 
     const selectedDate = new Date(this.selectedDate);
     const selectedYear = selectedDate.getFullYear();
@@ -248,10 +269,15 @@ export default {
                 <td>{{ session.duration }}</td>
                 <td>
                   <ul>
-                    <li v-for="(detail, detailIndex) in sortedDetails[index]" :key="detailIndex">
-                      • {{ detail.content }}
-                    </li>
+                    <li>{{ firstDetails[index] ? firstDetails[index].content : 'N/A' }}</li>
                   </ul>
+                </td>
+                <td class="details-btn-td">
+                  <button class="secondary-button">
+                    <router-link :to="'/analytics/' + session.customId">
+                      Details
+                    </router-link>
+                  </button>
                 </td>
                </tr>
             </tbody>

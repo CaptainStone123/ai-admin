@@ -4,8 +4,9 @@ import TestingView from '../views/TestingView.vue'
 import ChatbotSettingsView from '../views/ChatbotSettingsView.vue'
 import KnowledgeSourceView from '../views/KnowledgeSourceView.vue'
 import ClassifierView from '../views/ClassifierView.vue'
-import Information from '../views/Information.vue'
+import InformationView from '../views/InformationView.vue'
 import AccountView from '../views/AccountView.vue'
+import DetailsView from '../views/DetailsView.vue'
 import Login from '../components/Login.vue'
 import { useStore } from 'vuex';
  
@@ -50,7 +51,13 @@ const router = createRouter({
     {
       path: '/knowledge-source/:information',
       name: 'Information',
-      component: Information,
+      component: InformationView,
+      meta: { requiresAuth: true },
+    },
+    {
+      path: '/analytics/:customId',
+      name: 'Details',
+      component: DetailsView,
       meta: { requiresAuth: true },
     },
     {

@@ -16,9 +16,79 @@ export default {
         about: '', 
         admissions: '', 
         academics: '', 
+        classTokens: 0,
+        faqTokens: 0,
+        aboutTokens: 0,
+        admTokens: 0,
+        acadTokens: 0,
       }
     },
     mounted() {
+      axios
+      .get(this.baseUrl+'/api/getClassifierFromMongoDB')
+      .then(response => {
+        if (response.data && response.data.classifier) {
+          this.classTokens = response.data.classifier.length;
+        } else {
+          console.error('Invalid API response for classTokens:', response.data);
+        }
+      })
+      .catch(error => {
+        console.error('Error fetching classifier tokens:', error);
+      });
+
+      axios
+      .get(this.baseUrl+'/api/getFaQFromMongoDB')
+      .then(response => {
+        if (response.data && response.data.faq) {
+          this.faqTokens = response.data.faq.length;
+        } else {
+          console.error('Invalid API response for faqTokens:', response.data);
+        }
+      })
+      .catch(error => {
+        console.error('Error fetching faqTokens:', error);
+      });
+
+      axios
+      .get(this.baseUrl+'/api/getAboutUAFromMongoDB')
+      .then(response => {
+        if (response.data && response.data.about) {
+          this.aboutTokens = response.data.about.length;
+        } else {
+          console.error('Invalid API response for aboutTokens:', response.data);
+        }
+      })
+      .catch(error => {
+        console.error('Error fetching aboutUA tokens:', error);
+      });
+
+      axios
+      .get(this.baseUrl+'/api/getAdmissionsFromMongoDB')
+      .then(response => {
+        if (response.data && response.data.admissionInfo) {
+          this.admTokens = response.data.admissionInfo.length;
+        } else {
+          console.error('Invalid API response for admTokens:', response.data);
+        }
+      })
+      .catch(error => {
+        console.error('Error fetching admission tokens:', error);
+      });
+
+      axios
+      .get(this.baseUrl+'/api/getacadFromMongoDB')
+      .then(response => {
+        if (response.data && response.data.acads) {
+          this.acadTokens = response.data.acads.length;
+        } else {
+          console.error('Invalid API response for acadTokens:', response.data);
+        }
+      })
+      .catch(error => {
+        console.error('Error fetching admission tokens:', error);
+      });
+
       axios
       .get(this.baseUrl+'/api/getClassifierNameFromMongoDB')
       .then(response => {
@@ -111,7 +181,7 @@ export default {
         <tbody>
           <tr>
             <td >1.</td>
-            <td >365</td>
+            <td >{{ classTokens }}</td>
             <td >{{ classify }}</td>
             <td class="details-btn-td"><button class="secondary-button"><RouterLink to="/knowledge-source/main/classifier">Edit</RouterLink></button></td>
           </tr>
@@ -135,25 +205,25 @@ export default {
           </thead>
           <tbody>
             <tr>
-              <td>3641</td>
+              <td>{{ faqTokens }}</td>
               <td>one_111</td>
               <td>{{ faq }}</td>
               <td class="details-btn-td"><button class="secondary-button"><RouterLink to="/knowledge-source/frequently_asked">Edit</RouterLink></button></td>
             </tr>
             <tr>
-               <td>12696</td>
+               <td>{{ aboutTokens }}</td>
               <td>two_222</td>
               <td>{{ about }}</td>
               <td class="details-btn-td"><button class="secondary-button"><RouterLink to="/knowledge-source/about">Edit</RouterLink></button></td>
             </tr>
             <tr>
-               <td>8779</td>
+               <td>{{ admTokens }}</td>
               <td>three_333</td>
               <td>{{ admissions }}</td>
               <td class="details-btn-td"><button class="secondary-button"><RouterLink to="/knowledge-source/admissions">Edit</RouterLink></button></td>
             </tr>
             <tr>
-              <td>3437</td>
+              <td>{{ acadTokens }}</td>
               <td>four_444</td>
               <td>{{ academics }}</td>
               <td class="details-btn-td"><button class="secondary-button"><RouterLink to="/knowledge-source/academics">Edit</RouterLink></button></td>
