@@ -100,12 +100,12 @@ export default {
 
         if (this.Label.trim() !== '') {
           // updateData.name = this.Label;
-          updateData[selectedObject.name] = this.Label;
+          updateData.name = this.Label;
         }
 
         if (this.Content.trim() !== '') {
           // updateData.faq = this.Content;
-          updateData[selectedObject.update] = this.Content;
+          updateData[selectedObject.dataCont] = this.Content;
         }
 
         if (Object.keys(updateData).length > 0) {
