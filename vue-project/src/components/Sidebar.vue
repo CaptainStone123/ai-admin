@@ -7,6 +7,7 @@ export default {
         return {
             Name: '',
             baseUrl:'https://ua-ai-llm.vercel.app',
+            imageSrc: '', // Define imageName here
         };
     },
     mounted() {
@@ -24,7 +25,8 @@ export default {
             .then(response => {
                 const imageName = response.data.Image || 'stacy.png'; 
                 const imageSrc = `/${imageName}`;
-
+                this.imageSrc = imageSrc;
+ 
                 console.log(imageSrc);
                 
                 this.loadImage(imageSrc);
@@ -52,10 +54,9 @@ export default {
     <div class="sidebar">
         <div class="sidebar-heading">
             <div class="profile-img-cont">
-                <img class="profile-img" ref="profileImage" alt="">
+                <img :class="[imageSrc === '/UA-Logo.png' ? 'profile-img-ua-logo' : 'profile-img']" ref="profileImage" alt="">
              </div>
             <b class="name">{{ Name }}</b>
-
         </div>
         
         <p>Main</p>
@@ -92,20 +93,7 @@ export default {
 </template>
 
 <style scoped>
-.sidebar {
-    position: fixed;
-    left: 0;
-    top: 4rem;
-    z-index: 50;
-    background-color: white;
-    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.3);
-    height: calc(100vh - 4rem);
-    width: 275px;
-    transition: top 0.3s;
-    padding:2rem;
-    color: rgb(70, 70, 70);
-    font-size: 1rem;
-}
+.sidebar {position: fixed; left: 0;top: 4rem;z-index: 50;background-color: white;box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.3);height: calc(100vh - 4rem);width: 275px;transition: top 0.3s;padding:2rem;color: rgb(70, 70, 70);font-size: 1rem;}
 .sidebar p{
     margin: 20px 10px 20px 10px;
 }
@@ -114,9 +102,8 @@ export default {
     align-items: center;
 }
 .profile-img-cont{
-  height: 65px; width: 65px;
+  height: 65px; width: 70px;
   background-color: white;
-  padding:10px;
   border-radius: 50%;
   display: flex; align-items: center; justify-content: center;
   box-shadow: 0 0 2px rgba(37, 37, 37, 0.5);
@@ -124,6 +111,7 @@ export default {
 .profile-img{
  height: 55px;    
 }
+
 .name{
     font-size: 1.2rem;
 }
@@ -143,9 +131,7 @@ export default {
     align-items: center;
     padding: 10px ;
 }
-.link-content i{
-    padding: 0 12px 0 0;
-}
+.link-content i{padding: 0 12px 0 0;}
 </style>
 
 
