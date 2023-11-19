@@ -11,7 +11,8 @@ export default {
   },
   data() {
     return {
-      baseUrl:'https://ua-ai-llm.vercel.app',
+      // baseUrl:'https://ua-ai-llm.vercel.app',
+      baseUrl:'http://localhost:3000',
       Label: '',
       Content: '',
       information: this.$route.params.information,
@@ -38,6 +39,12 @@ export default {
         api: 'getacadFromMongoDB',
         update: 'updateAcademics',
         dataCont: 'acads',
+      },
+      date_events: {
+        className: 'date_events',
+        api: 'getDateEventsFromMongoDB',
+        update: 'updateDateEvents',
+        dataCont: 'dateEvents',
       }
     };
   },

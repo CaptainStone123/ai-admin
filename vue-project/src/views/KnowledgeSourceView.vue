@@ -16,11 +16,13 @@ export default {
         about: '', 
         admissions: '', 
         academics: '', 
+        date_events: '', 
         classTokens: 0,
         faqTokens: 0,
         aboutTokens: 0,
         admTokens: 0,
         acadTokens: 0,
+        dateEventsTokens: 0,
       }
     },
     mounted() {
@@ -90,6 +92,20 @@ export default {
       });
 
       axios
+      .get(this.baseUrl+'/api/getDateEventsFromMongoDB')
+      .then(response => {
+        if (response.data && response.data.dateEvents) {
+          this.dateEventsTokens = response.data.dateEvents.length;
+        } else {
+          console.error('Invalid API response for dateEventsTokens:', response.data);
+        }
+      })
+      .catch(error => {
+        console.error('Error fetching admission tokens:', error);
+      });
+      
+
+      axios
       .get(this.baseUrl+'/api/getClassifierNameFromMongoDB')
       .then(response => {
         console.log('ClassifierName API Response:', response.data);
@@ -149,6 +165,19 @@ export default {
           this.academics = response.data.name;
         } else {
           console.error('Invalid API response for academics:', response.data);
+        }
+      })
+      .catch(error => {
+        console.error('Error fetching academics:', error);
+      });
+
+      axios
+      .get(this.baseUrl+'/api/getClassNameFromMongoDB/date_events')
+      .then(response => {
+        if (response.data && response.data.name) {
+          this.date_events = response.data.name;
+        } else {
+          console.error('Invalid API response for date_events:', response.data);
         }
       })
       .catch(error => {
@@ -227,6 +256,12 @@ export default {
               <td>four_444</td>
               <td>{{ academics }}</td>
               <td class="details-btn-td"><button class="secondary-button"><RouterLink to="/knowledge-source/academics">Edit</RouterLink></button></td>
+            </tr>
+            <tr>
+              <td>{{ dateEventsTokens }}</td>
+              <td>five_555</td>
+              <td>{{ date_events }}</td>
+              <td class="details-btn-td"><button class="secondary-button"><RouterLink to="/knowledge-source/date_events">Edit</RouterLink></button></td>
             </tr>
           </tbody>
         </table>
