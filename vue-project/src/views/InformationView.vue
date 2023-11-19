@@ -11,8 +11,7 @@ export default {
   },
   data() {
     return {
-      // baseUrl:'https://ua-ai-llm.vercel.app',
-      baseUrl:'http://localhost:3000',
+      baseUrl:'https://ua-ai-llm.vercel.app',
       Label: '',
       Content: '',
       information: this.$route.params.information,
