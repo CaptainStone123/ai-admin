@@ -60,7 +60,7 @@ export default {
         }
       };
       try {
-        const response = await fetch(this.localUrl+'/completions', options);
+        const response = await fetch(this.baseUrl+'/completions', options);
         const data = await response.json();
         const conMessage = data.choices[0].message;
 
