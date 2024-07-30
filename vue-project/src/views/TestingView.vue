@@ -11,7 +11,7 @@ export default {
   data() {
     return {
       // baseUrl:'https://ua-ai-llm.vercel.app',
-      baseUrl:'https://uagpt-private-server-seven.vercel.app',
+      baseUrl:'https://uagpt-private-server.vercel.app',
       localUrl:'http://localhost:3000',
       input: '',
       isLoading: false,
